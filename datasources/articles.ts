@@ -41,12 +41,13 @@ export const getArticles = async (): Promise<Article[]> => {
 		throw new Error("env ARTICLES_DIR is not set");
 	}
 
-	const entries = await fs.readdir(articlesDir);
 	cachedArticles = await Promise.all(
-		entries.map(async entry => {
-			const raw = await fs.readFile(path.join(articlesDir, entry), "utf-8");
-			return parseArticle(raw);
-		}),
+		(await fs.readdir(articlesDir))
+			.filter(entry => entry.endsWith(".md"))
+			.map(async entry => {
+				const raw = await fs.readFile(path.join(articlesDir, entry), "utf-8");
+				return parseArticle(raw);
+			}),
 	);
 
 	return cachedArticles.sort((a, b) => b.dateStr.localeCompare(a.dateStr));
