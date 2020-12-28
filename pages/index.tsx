@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { Article, getArticles } from "../datasources";
+import { Article, getArticles } from "../datasources/articles";
 import style from "../styles/index.module.scss";
 
 type Props = {
