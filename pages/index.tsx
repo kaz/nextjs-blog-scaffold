@@ -16,21 +16,19 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const Index = ({ articles }: Props) => {
 	return (
-		<React.Fragment>
+		<div className={style.Index}>
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
 			</Head>
-			<div className={style.scope}>
-				<ul>
-					{articles.map(({ slug, title, date }) => (
-						<li key={slug}>
-							<div>{date.slice(0, 10)}</div>
-							<Link href={`/post/${slug}`}>{title}</Link>
-						</li>
-					))}
-				</ul>
-			</div>
-		</React.Fragment>
+			<ul>
+				{articles.map(({ slug, title, date }) => (
+					<li key={slug}>
+						<div>{date.slice(0, 10)}</div>
+						<Link href={`/post/${slug}`}>{title}</Link>
+					</li>
+				))}
+			</ul>
+		</div>
 	);
 };
 export default Index;
