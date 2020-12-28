@@ -1,0 +1,53 @@
+.Post :global {
+	article {
+		hr {
+			height: 2px;
+			border: none;
+			background-color: gainsboro;
+		}
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin: 1.5em 0 0.5em 0;
+		}
+		pre {
+			padding: 1em;
+			border-radius: 0.2em;
+			background-color: whitesmoke;
+			overflow-x: auto;
+			code {
+				padding: 0;
+			}
+		}
+		a {
+			color: royalblue;
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		blockquote {
+			color: gray;
+			padding: 0 1em;
+			margin: 0;
+			border-left: 0.4em solid gainsboro;
+		}
+		code {
+			padding: 0.2em 0.4em;
+			border-radius: 0.2em;
+			background-color: whitesmoke;
+			font-family: Courier, monospace;
+		}
+		table {
+			border-collapse: collapse;
+			th,
+			td {
+				padding: 0.2em 1em;
+				border: 1px solid gainsboro;
+			}
+		}
+	}
+}
