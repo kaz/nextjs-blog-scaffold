@@ -1,38 +1,37 @@
 import crypto from "crypto";
+import frontmatter from "front-matter";
 import { promises as fs } from "fs";
-import yaml from "js-yaml";
 import path from "path";
 
-type Meta = {
+type Attributes = {
 	slug: string;
 	title: string;
 	date: Date;
 	tags: string[];
 };
-export type Article = Omit<Meta, "date"> & {
+export type Article = Omit<Attributes, "date"> & {
 	date: string;
 	body: string;
 };
 
 const parseArticle = (raw: string): Article => {
-	const [, rawMeta, body] = raw.split("---\n");
-	const meta = yaml.safeLoad(rawMeta) as Partial<Meta>;
+	const { attributes, body } = frontmatter<Partial<Attributes>>(raw);
 
-	if (!meta.title) {
+	if (!attributes.title) {
 		throw new Error("parse failed: `title` did not exist");
 	}
-	if (!meta.date) {
+	if (!attributes.date) {
 		throw new Error("parse failed: `date` did not exist");
 	}
-	if (!meta.tags) {
+	if (!attributes.tags) {
 		throw new Error("parse failed: `tags` did not exist");
 	}
 
 	return {
-		slug: meta.slug || crypto.createHash("md5").update(meta.title).digest("hex"),
-		title: meta.title,
-		date: meta.date.toISOString(),
-		tags: meta.tags,
+		slug: attributes.slug || crypto.createHash("md5").update(attributes.title).digest("hex"),
+		title: attributes.title,
+		date: attributes.date.toISOString(),
+		tags: attributes.tags,
 		body,
 	};
 };
