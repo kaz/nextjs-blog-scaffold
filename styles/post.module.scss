@@ -49,5 +49,16 @@
 				border: 1px solid gainsboro;
 			}
 		}
+		[id^="def-"] {
+			display: flex;
+			margin: 1em 0;
+			div {
+				margin-right: 0.4em;
+
+				p {
+					margin: 0;
+				}
+			}
+		}
 	}
 }

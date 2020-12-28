@@ -159,4 +159,7 @@ This[^1] is footnote[^footnote].
 ## Footnotes definition (remark-footnotes)
 
 [^1]: numbered footnote
-[^footnote]: generic footnote
+
+      with multi paragraph
+
+[^footnote]: Hi there!

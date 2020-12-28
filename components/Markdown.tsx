@@ -24,8 +24,10 @@ const renderers: Renderers = {
 	footnoteDefinition({ identifier, label, children }) {
 		return (
 			<div id={`def-${identifier}`}>
-				<a href={`#def-${identifier}`}>{label}</a>
-				{children}
+				<div>
+					<a href={`#def-${identifier}`}>{label}</a>:
+				</div>
+				<div>{children}</div>
 			</div>
 		);
 	},
