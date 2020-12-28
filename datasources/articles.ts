@@ -1,33 +1,40 @@
+import crypto from "crypto";
 import { promises as fs } from "fs";
 import yaml from "js-yaml";
 import path from "path";
 
 type Meta = {
-	title?: string;
-	date?: Date;
-	tags?: string[];
+	slug: string;
+	title: string;
+	date: Date;
+	tags: string[];
 };
-export type Article = Required<Omit<Meta, "date">> & {
-	dateStr: string;
+export type Article = Omit<Meta, "date"> & {
+	date: string;
 	body: string;
 };
 
 const parseArticle = (raw: string): Article => {
 	const [, rawMeta, body] = raw.split("---\n");
-	const { title, date, tags } = yaml.safeLoad(rawMeta) as Meta;
+	const meta = yaml.safeLoad(rawMeta) as Partial<Meta>;
 
-	if (!title) {
+	if (!meta.title) {
 		throw new Error("parse failed: `title` did not exist");
 	}
-	if (!date) {
+	if (!meta.date) {
 		throw new Error("parse failed: `date` did not exist");
 	}
-	if (!tags) {
+	if (!meta.tags) {
 		throw new Error("parse failed: `tags` did not exist");
 	}
 
-	const dateStr = date.toISOString();
-	return { title, tags, dateStr, body };
+	return {
+		slug: meta.slug || crypto.createHash("md5").update(meta.title).digest("hex"),
+		title: meta.title,
+		date: meta.date.toISOString(),
+		tags: meta.tags,
+		body,
+	};
 };
 
 let cachedArticles: Article[];
@@ -50,5 +57,9 @@ export const getArticles = async (): Promise<Article[]> => {
 			}),
 	);
 
-	return cachedArticles.sort((a, b) => b.dateStr.localeCompare(a.dateStr));
+	return cachedArticles.sort((a, b) => b.date.localeCompare(a.date));
+};
+export const getArticleBySlug = async (slug: string): Promise<Article | undefined> => {
+	const articles = await getArticles();
+	return articles.find(article => article.slug == slug);
 };

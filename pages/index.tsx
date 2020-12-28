@@ -15,14 +15,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 const Index = ({ articles }: Props) => {
-	const articlesWithPermalink = articles.map(article =>
-		Object.assign(
-			{
-				permalink: `/post/${article.dateStr.slice(0, 10).replace(/-/g, "/")}`,
-			},
-			article,
-		),
-	);
 	return (
 		<React.Fragment>
 			<Head>
@@ -30,10 +22,10 @@ const Index = ({ articles }: Props) => {
 			</Head>
 			<div className={style.scope}>
 				<ul>
-					{articlesWithPermalink.map(article => (
-						<li key={article.dateStr}>
-							<div>{article.dateStr.slice(0, 10)}</div>
-							<Link href={article.permalink}>{article.title}</Link>
+					{articles.map(article => (
+						<li key={article.slug}>
+							<div>{article.date.slice(0, 10)}</div>
+							<Link href={`/post/${article.slug}`}>{article.title}</Link>
 						</li>
 					))}
 				</ul>
