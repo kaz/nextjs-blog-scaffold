@@ -1,0 +1,28 @@
+.scope :global {
+	ul {
+		padding: 0;
+		list-style-type: none;
+
+		li {
+			display: flex;
+			margin: 0.5em 0;
+
+			> div {
+				color: gray;
+				padding: 0.5em 1em 0.5em 0;
+				width: 8em;
+				text-align: right;
+			}
+			> a {
+				color: blue;
+				font-weight: bold;
+				text-decoration: none;
+				padding: 0.5em 1em;
+
+				&:hover {
+					background-color: ghostwhite;
+				}
+			}
+		}
+	}
+}
