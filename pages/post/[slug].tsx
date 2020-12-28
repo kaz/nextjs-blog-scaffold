@@ -25,6 +25,6 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 };
 
 const Post = ({ article }: Props) => {
-	return <p>{article.body}</p>;
+	return <pre>{article.body}</pre>;
 };
 export default Post;

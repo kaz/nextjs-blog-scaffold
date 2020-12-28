@@ -6,11 +6,11 @@ import { Article, getArticles } from "../datasources/articles";
 import style from "../styles/index.module.scss";
 
 type Props = {
-	articles: Article[];
+	articles: Pick<Article, "slug" | "title" | "date">[];
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	const articles = await getArticles();
+	const articles = (await getArticles()).map(({ slug, title, date }) => ({ slug, title, date }));
 	return { props: { articles } };
 };
 
@@ -22,10 +22,10 @@ const Index = ({ articles }: Props) => {
 			</Head>
 			<div className={style.scope}>
 				<ul>
-					{articles.map(article => (
-						<li key={article.slug}>
-							<div>{article.date.slice(0, 10)}</div>
-							<Link href={`/post/${article.slug}`}>{article.title}</Link>
+					{articles.map(({ slug, title, date }) => (
+						<li key={slug}>
+							<div>{date.slice(0, 10)}</div>
+							<Link href={`/post/${slug}`}>{title}</Link>
 						</li>
 					))}
 				</ul>

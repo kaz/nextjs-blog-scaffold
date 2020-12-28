@@ -1,5 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import "../styles/app.scss";
 
@@ -11,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => (
 		</Head>
 		<header>
 			<h1>
-				<a href="/">{process.env.NEXT_PUBLIC_BLOG_TITLE}</a>
+				<Link href="/">{process.env.NEXT_PUBLIC_BLOG_TITLE}</Link>
 			</h1>
 		</header>
 		<main>
@@ -19,5 +20,4 @@ const App = ({ Component, pageProps }: AppProps) => (
 		</main>
 	</React.Fragment>
 );
-
 export default App;

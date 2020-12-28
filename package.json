@@ -6,7 +6,7 @@
 		"dev": "next",
 		"build": "next build",
 		"start": "next start",
-		"type-check": "tsc"
+		"export": "next export"
 	},
 	"dependencies": {
 		"js-yaml": "^3.14.1",
