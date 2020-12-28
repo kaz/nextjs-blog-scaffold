@@ -1,4 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
+import React from "react";
+import Markdown from "../../components/Markdown";
 import { Article, getArticleBySlug, getArticles } from "../../datasources/articles";
 
 type Props = {
@@ -25,6 +28,15 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 };
 
 const Post = ({ article }: Props) => {
-	return <pre>{article.body}</pre>;
+	return (
+		<React.Fragment>
+			<Head>
+				<title>
+					{article.title} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
+				</title>
+			</Head>
+			<Markdown>{article.body}</Markdown>
+		</React.Fragment>
+	);
 };
 export default Post;
