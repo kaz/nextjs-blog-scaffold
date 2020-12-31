@@ -1,4 +1,4 @@
-import Katex from "@matejmazur/react-katex";
+import katex from "katex";
 import "katex/dist/katex.min.css";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -27,10 +27,10 @@ const renderers: Renderers = {
 		);
 	},
 	inlineMath({ value }) {
-		return <Katex>{value}</Katex>;
+		return <span dangerouslySetInnerHTML={{ __html: katex.renderToString(value, { displayMode: false }) }} />;
 	},
 	math({ value }) {
-		return <Katex block={true}>{value}</Katex>;
+		return <div dangerouslySetInnerHTML={{ __html: katex.renderToString(value, { displayMode: true }) }} />;
 	},
 	footnoteReference({ identifier, label }) {
 		return (
