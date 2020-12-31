@@ -5,13 +5,14 @@ import ReactMarkdown from "react-markdown";
 import footnotes from "remark-footnotes";
 import gfm from "remark-gfm";
 import math from "remark-math";
+import orderFootnotes from "remark-plugin-order-footnotes";
 
 type Props = {
 	children: string;
 };
 
 type Plugins = Parameters<typeof ReactMarkdown>[0]["plugins"];
-const plugins: Plugins = [gfm, math, footnotes];
+const plugins: Plugins = [gfm, math, footnotes, orderFootnotes];
 
 type Renderers = Parameters<typeof ReactMarkdown>[0]["renderers"];
 const renderers: Renderers = {
@@ -21,21 +22,21 @@ const renderers: Renderers = {
 	math({ value }) {
 		return <Katex block={true}>{value}</Katex>;
 	},
+	footnoteReference({ identifier, label }) {
+		return (
+			<sup id={`fnref-${identifier}`}>
+				<a href={`#fndef-${identifier}`}>{label}</a>
+			</sup>
+		);
+	},
 	footnoteDefinition({ identifier, label, children }) {
 		return (
-			<div id={`def-${identifier}`}>
+			<div className="footnote" id={`fndef-${identifier}`}>
 				<div>
-					<a href={`#def-${identifier}`}>{label}</a>:
+					<a href={`#fnref-${identifier}`}>{label}</a>.
 				</div>
 				<div>{children}</div>
 			</div>
-		);
-	},
-	footnoteReference({ identifier, label }) {
-		return (
-			<sup id={`ref-${identifier}`}>
-				<a href={`#def-${identifier}`}>{label}</a>
-			</sup>
 		);
 	},
 };

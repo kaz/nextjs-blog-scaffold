@@ -16,7 +16,8 @@
 		"react-markdown": "^5.0.3",
 		"remark-footnotes": "^3.0.0",
 		"remark-gfm": "^1.0.0",
-		"remark-math": "^4.0.0"
+		"remark-math": "^4.0.0",
+		"remark-plugin-order-footnotes": "file:remark-plugin-order-footnotes"
 	},
 	"devDependencies": {
 		"@types/node": "^14.14.17",

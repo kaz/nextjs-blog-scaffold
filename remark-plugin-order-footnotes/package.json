@@ -1,0 +1,11 @@
+{
+	"name": "remark-plugin-order-footnotes",
+	"version": "0.0.1",
+	"main": "index.ts",
+	"dependencies": {
+		"mdast": "^3.0.0",
+		"unified": "^9.2.0",
+		"unist-util-filter": "^2.0.3",
+		"unist-util-map": "^2.0.1"
+	}
+}
