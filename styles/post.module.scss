@@ -38,9 +38,9 @@ $baseHeight: 1.6em;
 			padding: $baseHeight $baseWidth;
 			border-radius: $gapSize;
 			background-color: whitesmoke;
-			overflow-x: auto;
 			code {
 				padding: 0;
+				tab-size: 4;
 			}
 		}
 		a {

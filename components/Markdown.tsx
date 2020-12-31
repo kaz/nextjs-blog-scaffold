@@ -2,6 +2,7 @@ import Katex from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import SyntaxHighlighter from "react-syntax-highlighter";
 import footnotes from "remark-footnotes";
 import gfm from "remark-gfm";
 import math from "remark-math";
@@ -16,6 +17,15 @@ const plugins: Plugins = [gfm, math, [footnotes, { inlineNotes: true }], orderFo
 
 type Renderers = Parameters<typeof ReactMarkdown>[0]["renderers"];
 const renderers: Renderers = {
+	code: ({ language, value }) => {
+		return (
+			<SyntaxHighlighter
+				language={language || "text"}
+				children={value}
+				customStyle={{ padding: null, background: null }}
+			/>
+		);
+	},
 	inlineMath({ value }) {
 		return <Katex>{value}</Katex>;
 	},
