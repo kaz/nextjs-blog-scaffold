@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -6,11 +6,15 @@ import { Article, getArticles } from "../datasources/articles";
 import style from "../styles/index.module.scss";
 
 type Props = {
-	articles: Pick<Article, "slug" | "title" | "date">[];
+	articles: Article[];
+};
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	const articles = (await getArticles()).map(({ slug, title, date }) => ({ slug, title, date }));
+	const articles = await getArticles();
 	return { props: { articles } };
 };
 

@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
@@ -10,6 +10,10 @@ type Props = {
 };
 type UrlQuery = {
 	slug: string;
+};
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
 };
 
 export const getStaticPaths: GetStaticPaths<UrlQuery> = async () => {
