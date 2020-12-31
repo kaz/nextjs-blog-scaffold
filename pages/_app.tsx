@@ -8,6 +8,7 @@ const App = ({ Component, pageProps }: AppProps) => (
 	<React.Fragment>
 		<Head>
 			<meta charSet="utf-8" />
+			<meta name="format-detection" content="telephone=no" />
 			<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 		</Head>
 		<header>
