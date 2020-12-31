@@ -34,11 +34,12 @@ $baseHeight: 1.6em;
 	}
 	pre {
 		margin: 0;
-		padding: $baseHeight $baseWidth;
 		border-radius: $gapSize;
 		background-color: whitesmoke;
 		code {
-			padding: 0;
+			display: block;
+			overflow-x: auto;
+			padding: $baseHeight $baseWidth;
 			tab-size: 4;
 		}
 	}
