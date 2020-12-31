@@ -154,12 +154,12 @@ $$
 
 ## Footnotes reference (remark-footnotes)
 
-This[^1] is[^footnote] footnote^[Hello from inline footnote!].
+This[^1] is footnote[^footnote].
 
 ## Footnotes definition (remark-footnotes)
+
+[^footnote]: Hi there!
 
 [^1]: numbered footnote
 
     with multi paragraph
-
-[^footnote]: Hi there!

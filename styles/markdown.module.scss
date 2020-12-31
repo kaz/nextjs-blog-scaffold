@@ -77,16 +77,4 @@ $baseHeight: 1.6em;
 			border: 1px solid gainsboro;
 		}
 	}
-	.footnote {
-		display: flex;
-		margin: $baseHeight 0;
-
-		> a {
-			line-height: $baseHeight;
-			margin-right: #{$baseWidth / 2};
-		}
-		> div {
-			@include cancelChildMargin;
-		}
-	}
 }
