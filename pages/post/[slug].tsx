@@ -3,7 +3,6 @@ import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
 import { Article, getArticleBySlug, getArticles } from "../../datasources/articles";
-import style from "../../styles/post.module.scss";
 
 type Props = {
 	article: Article;
@@ -34,16 +33,14 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article }: Props) => {
 	return (
-		<div className={style.Post}>
+		<React.Fragment>
 			<Head>
 				<title>
 					{article.title} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
 				</title>
 			</Head>
-			<article>
-				<Markdown>{article.body}</Markdown>
-			</article>
-		</div>
+			<Markdown>{article.body}</Markdown>
+		</React.Fragment>
 	);
 };
 export default Post;

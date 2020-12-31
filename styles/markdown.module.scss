@@ -1,0 +1,92 @@
+$gapSize: 0.2em;
+$baseWidth: 2em;
+$baseHeight: 1.6em;
+
+@mixin cancelChildMargin {
+	:first-child {
+		margin-top: 0;
+	}
+	:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.Markdown :global {
+	hr {
+		height: 2px;
+		border: none;
+		background-color: gainsboro;
+		margin: $baseHeight 0;
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: #{$baseHeight * 2} 0 $baseHeight 0;
+
+		&::before {
+			content: "#";
+			color: lightslategray;
+			margin-right: #{$gapSize * 2};
+		}
+	}
+	pre {
+		margin: 0;
+		padding: $baseHeight $baseWidth;
+		border-radius: $gapSize;
+		background-color: whitesmoke;
+		code {
+			padding: 0;
+			tab-size: 4;
+		}
+	}
+	a {
+		color: royalblue;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	p {
+		margin: $baseHeight 0;
+		line-height: $baseHeight;
+	}
+	blockquote {
+		margin: 0;
+		padding: $baseHeight $baseWidth;
+		color: gray;
+		border-left: #{$baseWidth / 4} solid gainsboro;
+		@include cancelChildMargin;
+	}
+	li {
+		line-height: $baseHeight;
+	}
+	code {
+		padding: $gapSize #{$gapSize * 2};
+		border-radius: $gapSize;
+		background-color: whitesmoke;
+		font-family: Courier, monospace;
+	}
+	table {
+		border-collapse: collapse;
+		th,
+		td {
+			padding: #{$baseHeight / 4} #{$baseWidth / 2};
+			border: 1px solid gainsboro;
+		}
+	}
+	.footnote {
+		display: flex;
+		margin: $baseHeight 0;
+
+		> a {
+			line-height: $baseHeight;
+			margin-right: #{$baseWidth / 2};
+		}
+		> div {
+			@include cancelChildMargin;
+		}
+	}
+}
