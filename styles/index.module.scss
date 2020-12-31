@@ -4,16 +4,15 @@
 		list-style-type: none;
 
 		li {
-			display: flex;
 			margin: 0.5em 0;
+
+			display: flex;
+			flex-direction: column;
 
 			> div {
 				flex-shrink: 0;
-				width: 7em;
-
+				padding: 1em 0 0 1em;
 				color: gray;
-				padding: 0.5em 1em 0.5em 0;
-				text-align: right;
 			}
 			> a {
 				color: royalblue;
@@ -23,6 +22,16 @@
 
 				&:hover {
 					background-color: ghostwhite;
+				}
+			}
+
+			@media screen and (min-width: 768px) {
+				flex-direction: row;
+
+				> div {
+					width: 7em;
+					text-align: right;
+					padding: 0.5em 1em 0.5em 0;
 				}
 			}
 		}

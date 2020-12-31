@@ -12,7 +12,7 @@ type Props = {
 };
 
 type Plugins = Parameters<typeof ReactMarkdown>[0]["plugins"];
-const plugins: Plugins = [gfm, math, footnotes, orderFootnotes];
+const plugins: Plugins = [gfm, math, [footnotes, { inlineNotes: true }], orderFootnotes];
 
 type Renderers = Parameters<typeof ReactMarkdown>[0]["renderers"];
 const renderers: Renderers = {
@@ -32,9 +32,7 @@ const renderers: Renderers = {
 	footnoteDefinition({ identifier, label, children }) {
 		return (
 			<div className="footnote" id={`fndef-${identifier}`}>
-				<div>
-					<a href={`#fnref-${identifier}`}>{label}</a>.
-				</div>
+				<a href={`#fnref-${identifier}`}>{label}</a>
 				<div>{children}</div>
 			</div>
 		);

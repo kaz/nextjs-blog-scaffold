@@ -1,9 +1,23 @@
+$gapSize: 0.2em;
+$baseWidth: 2em;
+$baseHeight: 1.6em;
+
+@mixin cancelChildMargin {
+	:first-child {
+		margin-top: 0;
+	}
+	:last-child {
+		margin-bottom: 0;
+	}
+}
+
 .Post :global {
 	article {
 		hr {
 			height: 2px;
 			border: none;
 			background-color: gainsboro;
+			margin: $baseHeight 0;
 		}
 		h1,
 		h2,
@@ -11,11 +25,18 @@
 		h4,
 		h5,
 		h6 {
-			margin: 1.5em 0 0.5em 0;
+			margin: #{$baseHeight * 2} 0 $baseHeight 0;
+
+			&::before {
+				content: "#";
+				color: lightslategray;
+				margin-right: #{$gapSize * 2};
+			}
 		}
 		pre {
-			padding: 1em;
-			border-radius: 0.2em;
+			margin: 0;
+			padding: $baseHeight $baseWidth;
+			border-radius: $gapSize;
 			background-color: whitesmoke;
 			overflow-x: auto;
 			code {
@@ -29,15 +50,23 @@
 				text-decoration: underline;
 			}
 		}
+		p {
+			margin: $baseHeight 0;
+			line-height: $baseHeight;
+		}
 		blockquote {
-			color: gray;
-			padding: 0 1em;
 			margin: 0;
-			border-left: 0.4em solid gainsboro;
+			padding: $baseHeight $baseWidth;
+			color: gray;
+			border-left: #{$baseWidth / 4} solid gainsboro;
+			@include cancelChildMargin;
+		}
+		li {
+			line-height: $baseHeight;
 		}
 		code {
-			padding: 0.2em 0.4em;
-			border-radius: 0.2em;
+			padding: $gapSize #{$gapSize * 2};
+			border-radius: $gapSize;
 			background-color: whitesmoke;
 			font-family: Courier, monospace;
 		}
@@ -45,19 +74,20 @@
 			border-collapse: collapse;
 			th,
 			td {
-				padding: 0.2em 1em;
+				padding: #{$baseHeight / 4} #{$baseWidth / 2};
 				border: 1px solid gainsboro;
 			}
 		}
 		.footnote {
 			display: flex;
-			margin: 1em 0;
-			div {
-				margin-right: 0.4em;
+			margin: $baseHeight 0;
 
-				p {
-					margin: 0;
-				}
+			> a {
+				line-height: $baseHeight;
+				margin-right: #{$baseWidth / 2};
+			}
+			> div {
+				@include cancelChildMargin;
 			}
 		}
 	}
