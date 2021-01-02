@@ -9,7 +9,7 @@ import markdown from "remark-parse";
 import remark2rehype from "remark-rehype";
 import unified from "unified";
 import style from "../styles/markdown.module.scss";
-import numberedFootnote from "./numberedFootnote";
+import numberedFootnote from "../utils/numberedFootnote";
 
 const render = (md: string): string =>
 	unified()

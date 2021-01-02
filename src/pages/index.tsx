@@ -2,8 +2,8 @@ import { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { Article, getArticles } from "../datasources/articles";
 import style from "../styles/index.module.scss";
+import { Article, getArticles } from "../utils/articles";
 
 type Props = {
 	articles: Article[];

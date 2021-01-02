@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
-import { Article, getArticleBySlug, getArticles } from "../../datasources/articles";
+import { Article, getArticleBySlug, getArticles } from "../../utils/articles";
 
 type Props = {
 	article: Article;
