@@ -43,7 +43,7 @@ const Post = ({ article }: Props) => {
 			<section className={styles.meta}>
 				<small>{article.date.slice(0, 10)}</small>
 				<h1>{article.title}</h1>
-				<a>
+				<a href="#profile">
 					<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 					{process.env.NEXT_PUBLIC_AUTHOR_NAME}
 				</a>

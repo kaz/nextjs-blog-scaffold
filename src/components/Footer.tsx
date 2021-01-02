@@ -4,7 +4,7 @@ import styles from "../styles/footer.module.scss";
 const Header = () => {
 	return (
 		<footer className={styles.footer}>
-			<div className={styles.profile}>
+			<div id="profile" className={styles.profile}>
 				<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 				<p>
 					<small>Author</small>
