@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/_global.scss";
 
@@ -13,6 +14,7 @@ const App = ({ Component, pageProps }: AppProps) => (
 		</Head>
 		<Header />
 		<Component {...pageProps} />
+		<Footer />
 	</React.Fragment>
 );
 export default App;
