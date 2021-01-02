@@ -9,13 +9,13 @@ $profilePhotoSize: 64px;
 	.profile {
 		display: flex;
 
-		img {
+		> img {
 			width: $profilePhotoSize;
 			height: $profilePhotoSize;
 			border-radius: #{$profilePhotoSize / 2};
 			margin-right: 1em;
 		}
-		p {
+		> div {
 			margin: 0;
 
 			small {

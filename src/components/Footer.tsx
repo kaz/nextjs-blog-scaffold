@@ -6,10 +6,10 @@ const Header = () => {
 		<footer className={styles.footer}>
 			<div id="profile" className={styles.profile}>
 				<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
-				<p>
+				<div>
 					<small>Author</small>
 					<h3>{process.env.NEXT_PUBLIC_AUTHOR_NAME}</h3>
-				</p>
+				</div>
 			</div>
 			{process.env.NEXT_PUBLIC_COPYRIGHT && (
 				<div className={styles.copyright}>&copy; {process.env.NEXT_PUBLIC_COPYRIGHT}</div>
