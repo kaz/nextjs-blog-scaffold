@@ -1,0 +1,23 @@
+.Post :global {
+	.postMeta {
+		small {
+			color: gray;
+		}
+		h1 {
+			margin: 0 0 0.2em 0;
+		}
+		a {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: gray;
+
+			img {
+				width: 1.5em;
+				height: 1.5em;
+				border-radius: 1.5em;
+				margin-right: 0.5em;
+			}
+		}
+	}
+}

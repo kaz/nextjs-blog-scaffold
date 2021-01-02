@@ -13,6 +13,7 @@ body {
 }
 header {
 	@include pageContainer;
+	margin-bottom: 3rem;
 
 	h1 {
 		font-size: 1.2rem;
