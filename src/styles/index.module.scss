@@ -1,4 +1,8 @@
+@use "mixins" as *;
+
 .Index :global {
+	@include pageContainer;
+
 	ul {
 		padding: 0;
 		list-style-type: none;

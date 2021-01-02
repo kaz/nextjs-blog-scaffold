@@ -1,4 +1,8 @@
+@use "mixins" as *;
+
 .Post :global {
+	@include pageContainer;
+
 	.postMeta {
 		small {
 			color: gray;

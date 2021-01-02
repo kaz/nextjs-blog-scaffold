@@ -1,0 +1,13 @@
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	padding: 1em;
+	font-family: Arial, sans-serif;
+}
+
+@mixin pageContainer {
+	max-width: 50rem;
+	margin: 2rem auto;
+}
