@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
+import SocialShare from "../../components/SocialShare";
 import styles from "../../styles/post.module.scss";
 import { Article, getArticleBySlug, getArticles } from "../../utils/articles";
 
@@ -48,7 +49,9 @@ const Post = ({ article }: Props) => {
 					{process.env.NEXT_PUBLIC_AUTHOR_NAME}
 				</a>
 			</section>
+			<SocialShare />
 			<Markdown>{article.body}</Markdown>
+			<SocialShare />
 		</main>
 	);
 };

@@ -1,0 +1,21 @@
+$boxSize: 32px;
+
+.social {
+	text-align: right;
+	margin: 1em 0;
+
+	> button {
+		display: inline-block;
+
+		margin-left: #{$boxSize / 16};
+		padding: #{$boxSize / 4};
+
+		height: $boxSize;
+		width: $boxSize;
+
+		fill: white;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+	}
+}
