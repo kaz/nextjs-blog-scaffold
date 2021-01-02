@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
-import style from "../../styles/post.module.scss";
+import styles from "../../styles/post.module.scss";
 import { Article, getArticleBySlug, getArticles } from "../../utils/articles";
 
 type Props = {
@@ -34,22 +34,22 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article }: Props) => {
 	return (
-		<div className={style.Post}>
+		<main className={styles.post}>
 			<Head>
 				<title>
 					{article.title} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
 				</title>
 			</Head>
-			<div className="postMeta">
+			<section className={styles.meta}>
 				<small>{article.date.slice(0, 10)}</small>
 				<h1>{article.title}</h1>
 				<a>
 					<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 					{process.env.NEXT_PUBLIC_AUTHOR_NAME}
 				</a>
-			</div>
+			</section>
 			<Markdown>{article.body}</Markdown>
-		</div>
+		</main>
 	);
 };
 export default Post;

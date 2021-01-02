@@ -1,18 +1,20 @@
 import React from "react";
-import style from "../styles/footer.module.scss";
+import styles from "../styles/footer.module.scss";
 
 const Header = () => {
 	return (
-		<div className={style.Footer}>
-			<div className="profile">
+		<footer className={styles.footer}>
+			<div className={styles.profile}>
 				<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 				<p>
 					<small>Author</small>
 					<h3>{process.env.NEXT_PUBLIC_AUTHOR_NAME}</h3>
 				</p>
 			</div>
-			{process.env.NEXT_PUBLIC_COPYRIGHT && <div className="copyright">&copy; {process.env.NEXT_PUBLIC_COPYRIGHT}</div>}
-		</div>
+			{process.env.NEXT_PUBLIC_COPYRIGHT && (
+				<div className={styles.copyright}>&copy; {process.env.NEXT_PUBLIC_COPYRIGHT}</div>
+			)}
+		</footer>
 	);
 };
 export default Header;

@@ -8,7 +8,7 @@ import math from "remark-math";
 import markdown from "remark-parse";
 import remark2rehype from "remark-rehype";
 import unified from "unified";
-import style from "../styles/markdown.module.scss";
+import styles from "../styles/markdown.module.scss";
 import numberedFootnote from "../utils/numberedFootnote";
 
 const render = (md: string): string =>
@@ -30,6 +30,6 @@ type Props = {
 };
 
 const Markdown = ({ children }: Props) => {
-	return <article className={style.Markdown} dangerouslySetInnerHTML={{ __html: render(children) }} />;
+	return <article className={styles.markdown} dangerouslySetInnerHTML={{ __html: render(children) }} />;
 };
 export default Markdown;

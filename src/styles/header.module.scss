@@ -1,6 +1,6 @@
 @use "mixins" as *;
 
-.Header :global {
+.header {
 	@include pageContainer;
 	margin-bottom: 3rem;
 

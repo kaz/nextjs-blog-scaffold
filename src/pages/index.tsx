@@ -2,7 +2,7 @@ import { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import style from "../styles/index.module.scss";
+import styles from "../styles/index.module.scss";
 import { Article, getArticles } from "../utils/articles";
 
 type Props = {
@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const Index = ({ articles }: Props) => {
 	return (
-		<div className={style.Index}>
+		<main className={styles.index}>
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
 			</Head>
@@ -32,7 +32,7 @@ const Index = ({ articles }: Props) => {
 					</li>
 				))}
 			</ul>
-		</div>
+		</main>
 	);
 };
 export default Index;
