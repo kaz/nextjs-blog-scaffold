@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../styles/footer.module.scss";
 
-const Header = () => {
+const Footer = () => {
 	return (
 		<footer className={styles.footer}>
 			<div id="profile" className={styles.profile}>
@@ -17,4 +17,4 @@ const Header = () => {
 		</footer>
 	);
 };
-export default Header;
+export default Footer;
