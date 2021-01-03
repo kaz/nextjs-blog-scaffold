@@ -34,12 +34,11 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 };
 
 const Post = ({ article }: Props) => {
+	const pageTitle = `${article.title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
 	return (
 		<main className={styles.post}>
 			<Head>
-				<title>
-					{article.title} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
-				</title>
+				<title>{pageTitle}</title>
 			</Head>
 			<section className={styles.meta}>
 				<small>{article.date.slice(0, 10)}</small>
@@ -49,9 +48,9 @@ const Post = ({ article }: Props) => {
 					{process.env.NEXT_PUBLIC_AUTHOR_NAME}
 				</a>
 			</section>
-			<SocialShare />
+			<SocialShare pageTitle={pageTitle} />
 			<Markdown>{article.body}</Markdown>
-			<SocialShare />
+			<SocialShare pageTitle={pageTitle} />
 		</main>
 	);
 };

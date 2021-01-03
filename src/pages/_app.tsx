@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
+import CanonicalUrlContext from "../components/CanonicalUrlContext";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/_global.scss";
@@ -9,7 +10,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
 	const canonicalUrl = `${process.env.NEXT_PUBLIC_BLOG_URL}${router.asPath}`;
 
 	return (
-		<React.Fragment>
+		<CanonicalUrlContext.Provider value={canonicalUrl}>
 			<Head>
 				<meta charSet="utf-8" />
 				<meta name="format-detection" content="telephone=no" />
@@ -20,7 +21,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
 			<Header />
 			<Component {...pageProps} />
 			<Footer />
-		</React.Fragment>
+		</CanonicalUrlContext.Provider>
 	);
 };
 export default App;
