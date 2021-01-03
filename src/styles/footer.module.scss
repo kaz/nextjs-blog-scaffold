@@ -1,13 +1,14 @@
 @use "mixins" as *;
 
 $profilePhotoSize: 64px;
+$snsLinkIconSize: 16px;
 
 .footer {
 	@include pageContainer;
-	margin-top: 3rem;
 
 	.profile {
 		display: flex;
+		margin: 4em 0;
 
 		> img {
 			width: $profilePhotoSize;
@@ -24,6 +25,14 @@ $profilePhotoSize: 64px;
 			h3 {
 				font-weight: normal;
 				margin: 0;
+
+				a {
+					display: inline-block;
+					margin-left: #{$snsLinkIconSize / 2};
+
+					width: $snsLinkIconSize;
+					height: $snsLinkIconSize;
+				}
 			}
 		}
 	}
