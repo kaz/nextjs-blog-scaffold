@@ -35,10 +35,29 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article }: Props) => {
 	const pageTitle = `${article.title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
+	const description = `${article.body.slice(0, 100)} ...`;
+
 	return (
 		<main className={styles.post}>
 			<Head>
 				<title>{pageTitle}</title>
+				<meta name="description" content={description} />
+				<meta property="og:title" content={pageTitle} />
+				<meta property="og:type" content="article" />
+				{/*
+				<meta property="og:image" content="" />
+				*/}
+				<meta property="og:description" content={description} />
+				<meta property="og:article:published_time" content={article.date} />
+				<meta property="og:article:author" content={process.env.NEXT_PUBLIC_AUTHOR_NAME} />
+				{article.tags.map(tag => (
+					<meta property="og:article:tag" content={tag} key={tag} />
+				))}
+				<meta name="twitter:card" content="summary" />
+				{/*
+				<meta name="twitter:site" content="@" />
+				<meta name="twitter:creator" content="@" />
+				*/}
 			</Head>
 			<section className={styles.meta}>
 				<small>{article.date.slice(0, 10)}</small>
