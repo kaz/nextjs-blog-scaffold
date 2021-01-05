@@ -1,7 +1,7 @@
 import "highlight.js/styles/github.css";
 import "katex/dist/katex.css";
+import { markdownToHtml } from "../lib/markdown";
 import styles from "../styles/markdown.module.scss";
-import { markdownToHtml } from "../utils/markdown";
 
 type Props = {
 	children: string;

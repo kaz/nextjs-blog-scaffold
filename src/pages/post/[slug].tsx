@@ -3,9 +3,9 @@ import Head from "next/head";
 import React from "react";
 import Markdown from "../../components/Markdown";
 import SocialShare from "../../components/SocialShare";
+import { Article, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
+import { markdownToDescription } from "../../lib/markdown";
 import styles from "../../styles/post.module.scss";
-import { Article, getArticleBySlug, getArticles } from "../../utils/articles";
-import { markdownToDescription } from "../../utils/markdown";
 
 type Props = {
 	article: Article;
