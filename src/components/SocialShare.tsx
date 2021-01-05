@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import styles from "../styles/socialshare.module.scss";
-import CanonicalUrlContext from "./CanonicalUrlContext";
+import CanonicalUrlContext from "../contexts/CanonicalUrlContext";
+import styles from "../styles/components/socialshare.module.scss";
 import { FacebookIcon, HatenabookmarkIcon, LineIcon, TwitterIcon } from "./Icon";
 
 type Props = {

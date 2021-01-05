@@ -5,7 +5,7 @@ import Markdown from "../../components/Markdown";
 import SocialShare from "../../components/SocialShare";
 import { Article, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
 import { markdownToDescription } from "../../lib/markdown";
-import styles from "../../styles/post.module.scss";
+import styles from "../../styles/pages/post.module.scss";
 
 type Props = {
 	article: Article;

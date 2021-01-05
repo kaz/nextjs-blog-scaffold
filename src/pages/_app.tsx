@@ -1,9 +1,9 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import CanonicalUrlContext from "../components/CanonicalUrlContext";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import CanonicalUrlContext from "../contexts/CanonicalUrlContext";
 import "../styles/_global.scss";
 
 const App = ({ Component, pageProps, router }: AppProps) => {
