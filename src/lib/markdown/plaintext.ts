@@ -1,4 +1,4 @@
-import { Text } from "mdast";
+import { Text } from "hast";
 import { Plugin, Transformer } from "unified";
 import visit from "unist-util-visit";
 
@@ -9,7 +9,7 @@ const transformer: Transformer = tree => {
 	visit<Text>(tree, "text", node => {
 		texts.push(node.value);
 	});
-	const output: Text = { type: "text", value: texts.join("") };
+	const output: Text = { type: "text", value: texts.join("").replace(/\r|\n/g, "") };
 	return output;
 };
 
