@@ -5,13 +5,13 @@ import { External } from "../lib/datasource/external";
 import styles from "../styles/components/ArticleList.module.scss";
 
 const ArticleItem = ({ item }: { item: Article }) => (
-	<li key={item.slug}>
+	<li>
 		<div>{item.date.slice(0, 10)}</div>
 		<Link href={`/post/${item.slug}`}>{item.title}</Link>
 	</li>
 );
 const ExternalItem = ({ item }: { item: External }) => (
-	<li key={item.url}>
+	<li>
 		<div>{item.date.slice(0, 10)}</div>
 		<a target="_blank" href={item.url}>
 			{item.title}
@@ -27,10 +27,10 @@ const ArticleList = ({ entries }: Props) => (
 	<ul className={styles.articles}>
 		{entries.map(entry => {
 			if (entry.type == "article") {
-				return <ArticleItem item={entry} />;
+				return <ArticleItem key={entry.slug} item={entry} />;
 			}
 			if (entry.type == "external") {
-				return <ExternalItem item={entry} />;
+				return <ExternalItem key={entry.url} item={entry} />;
 			}
 			// Exhaustive Check
 			const _: never = entry;
