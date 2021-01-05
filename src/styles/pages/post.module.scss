@@ -102,4 +102,37 @@ $baseHeight: 1.6em;
 			border: 1px solid gainsboro;
 		}
 	}
+
+	:global(.linkCard) {
+		display: flex;
+		margin: $baseHeight 0;
+		border-radius: $gapSize;
+
+		color: inherit;
+		&:hover {
+			text-decoration: none;
+		}
+
+		border: 1px solid gainsboro;
+
+		> img {
+			height: 128px;
+			margin: auto $baseWidth;
+		}
+		> div {
+			padding: $baseHeight $baseWidth;
+
+			big {
+				display: block;
+			}
+			small {
+				display: block;
+				color: gray;
+			}
+			span {
+				display: block;
+				padding-top: #{$baseHeight / 2};
+			}
+		}
+	}
 }

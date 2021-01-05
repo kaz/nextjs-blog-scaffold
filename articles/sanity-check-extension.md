@@ -23,6 +23,14 @@ document.querySelector("#button").addEventListener("click", () => {
 });
 </script>
 
+## OGP
+
+This is [inline link](https://ogp.me/), so won't be transformed to rich content block.
+
+<https://ogp.me/>
+
+<https://nextjs.org/>
+
 ## oEmbed (Twitter)
 
 This is [inline link](https://twitter.com/reactjs/status/1341072021099327489), so won't be transformed to rich content block.

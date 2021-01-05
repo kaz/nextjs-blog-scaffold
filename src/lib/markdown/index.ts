@@ -7,6 +7,7 @@ import math from "remark-math";
 import parse from "remark-parse";
 import remark2rehype from "remark-rehype";
 import unified from "unified";
+import embedOpengraph from "./embedOpengraph";
 import embedTweet from "./embedTweet";
 import linkTarget from "./linkTarget";
 import numberedFootnote from "./numberedFootnote";
@@ -34,8 +35,9 @@ export const markdownToHtml = async (md: string) => {
 	const html = await getMarkdownProcessor()
 		.use(katex)
 		.use(require("rehype-highlight"))
-		.use(linkTarget)
 		.use(embedTweet)
+		.use(embedOpengraph)
+		.use(linkTarget)
 		.use(raw)
 		.use(stringify)
 		.process(md);
