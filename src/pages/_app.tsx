@@ -9,6 +9,9 @@ import "../styles/_global.scss";
 const App = ({ Component, pageProps, router }: AppProps) => {
 	const canonicalUrl = `${process.env.NEXT_PUBLIC_BLOG_URL}${router.asPath}`;
 
+	const [, screenName] =
+		(process.env.NEXT_PUBLIC_AUTHOR_TWITTER_URL || "").match(/^https:\/\/twitter.com\/(.+?)^/) || [];
+
 	return (
 		<CanonicalUrlContext.Provider value={canonicalUrl}>
 			<Head>
@@ -19,6 +22,8 @@ const App = ({ Component, pageProps, router }: AppProps) => {
 				<meta name="generator" content="https://github.com/kaz/nextjs-blog-scaffold" />
 				<meta property="og:url" content={canonicalUrl} />
 				<meta property="og:site_name" content={process.env.NEXT_PUBLIC_BLOG_TITLE} />
+				{screenName && <meta name="twitter:site" content={`@${screenName}`} />}
+				{screenName && <meta name="twitter:creator" content={`@${screenName}`} />}
 				<link rel="icon" href={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 				<link rel="canonical" href={canonicalUrl} />
 			</Head>

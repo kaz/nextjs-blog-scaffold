@@ -54,10 +54,6 @@ const Post = ({ article }: Props) => {
 					<meta property="og:article:tag" content={tag} key={tag} />
 				))}
 				<meta name="twitter:card" content="summary" />
-				{/*
-				<meta name="twitter:site" content="@" />
-				<meta name="twitter:creator" content="@" />
-				*/}
 			</Head>
 			<section className={styles.meta}>
 				<small>{article.date.slice(0, 10)}</small>
