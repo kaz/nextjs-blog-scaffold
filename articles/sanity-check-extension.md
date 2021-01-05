@@ -10,9 +10,9 @@ tags: [sanity-check]
 - External Link
   - https://nextjs.org/
 - Internal Link (Absolute URL)
-  - http://localhost:3000/post/sanity-check-extension/
+  - http://localhost:3000/post/sanity-check/
 - Internal Link (Relative URL)
-  - [/post/sanity-check-extension/](/post/sanity-check-extension/)
+  - [/post/sanity-check-plugin/](/post/sanity-check-plugin/)
 
 ## Dangerous HTML
 
@@ -23,16 +23,18 @@ document.querySelector("#button").addEventListener("click", () => {
 });
 </script>
 
-## OGP
+## OGP (Remote)
 
 This is [inline link](https://ogp.me/), so won't be transformed to rich content block.
 
-<https://ogp.me/>
+https://ogp.me/
 
-<https://nextjs.org/>
+## OGP (Local / absolute and related links)
+
+http://localhost:3000/post/sanity-check/
+
+[/post/sanity-check-plugin/](/post/sanity-check-plugin/)
 
 ## oEmbed (Twitter)
 
-This is [inline link](https://twitter.com/reactjs/status/1341072021099327489), so won't be transformed to rich content block.
-
-<https://twitter.com/reactjs/status/1341072021099327489>
+https://twitter.com/reactjs/status/1341072021099327489
