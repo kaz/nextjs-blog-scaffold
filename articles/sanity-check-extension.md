@@ -13,3 +13,12 @@ tags: [sanity-check]
   - http://localhost:3000/post/sanity-check-extension/
 - Internal Link (Relative URL)
   - [/post/sanity-check-extension/](/post/sanity-check-extension/)
+
+## Dangerous HTML
+
+<button id="button">CLICK HERE!</button>
+<script>
+document.querySelector("#button").addEventListener("click", () => {
+  alert("Hi!");
+});
+</script>

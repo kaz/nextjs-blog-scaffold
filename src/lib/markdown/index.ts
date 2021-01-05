@@ -1,4 +1,5 @@
 import katex from "rehype-katex";
+import raw from "rehype-raw";
 import stringify from "rehype-stringify";
 import footnotes from "remark-footnotes";
 import gfm from "remark-gfm";
@@ -17,10 +18,7 @@ const getMarkdownProcessor = () =>
 		.use(math)
 		.use(footnotes)
 		.use(numberedFootnote)
-		.use(remark2rehype)
-		.use(katex)
-		.use(require("rehype-highlight"))
-		.use(extendLink);
+		.use(remark2rehype, { allowDangerousHtml: true });
 
 const descriptionLength = 100;
 export const markdownToDescription = (md: string, length = descriptionLength) => {
@@ -31,4 +29,12 @@ export const markdownToDescription = (md: string, length = descriptionLength) =>
 	return `${plain.substr(0, length - 1)}…`;
 };
 
-export const markdownToHtml = (md: string) => getMarkdownProcessor().use(stringify).processSync(md).toString();
+export const markdownToHtml = (md: string) =>
+	getMarkdownProcessor()
+		.use(raw)
+		.use(katex)
+		.use(require("rehype-highlight"))
+		.use(extendLink)
+		.use(stringify)
+		.processSync(md)
+		.toString();
