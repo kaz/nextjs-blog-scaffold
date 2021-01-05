@@ -11,3 +11,6 @@ export const map = async (node: Node, mapFn: (node: Node) => Promise<Node>): Pro
 	}
 	return node;
 };
+
+export const isLocalURL = (url: string) =>
+	!url.startsWith("http") || url.startsWith(process.env.NEXT_PUBLIC_BLOG_URL || "🍣");

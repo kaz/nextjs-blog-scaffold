@@ -1,6 +1,6 @@
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
-import { isElement, map } from "./utils";
+import { isElement, isLocalURL, map } from "./utils";
 
 const plugin: Plugin = () => transformer;
 const transformer: Transformer = tree => map(tree, mapFn);
@@ -20,13 +20,11 @@ const mapFn = async (node: Node) => {
 	if (typeof href != "string") {
 		return node;
 	}
-
-	const local = process.env.NEXT_PUBLIC_BLOG_URL;
-	if (!local || (href.startsWith("http") && !href.startsWith(local))) {
-		node.properties["target"] = "_blank";
+	if (isLocalURL(href)) {
 		return node;
 	}
 
+	node.properties["target"] = "_blank";
 	return node;
 };
 
