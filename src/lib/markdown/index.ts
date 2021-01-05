@@ -7,7 +7,8 @@ import math from "remark-math";
 import parse from "remark-parse";
 import remark2rehype from "remark-rehype";
 import unified from "unified";
-import extendLink from "./extendLink";
+import embedTweet from "./embedTweet";
+import linkTarget from "./linkTarget";
 import numberedFootnote from "./numberedFootnote";
 import plaintext from "./plaintext";
 
@@ -33,7 +34,8 @@ export const markdownToHtml = async (md: string) => {
 	const html = await getMarkdownProcessor()
 		.use(katex)
 		.use(require("rehype-highlight"))
-		.use(extendLink)
+		.use(linkTarget)
+		.use(embedTweet)
 		.use(raw)
 		.use(stringify)
 		.process(md);

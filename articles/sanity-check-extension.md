@@ -22,3 +22,9 @@ document.querySelector("#button").addEventListener("click", () => {
   alert("Hi!");
 });
 </script>
+
+## oEmbed (Twitter)
+
+This is [inline link](https://twitter.com/reactjs/status/1341072021099327489), so won't be transformed to rich content block.
+
+<https://twitter.com/reactjs/status/1341072021099327489>
