@@ -21,7 +21,7 @@ export type External = Omit<ExternalAttrs, "date" | "overwriteTagsWithOgp"> & {
 const ogp = async (url: string): Promise<Partial<OgpAttrs>> => {
 	const resp = await fetch(url);
 	if (!resp.ok) {
-		throw new Error(`fetch failed: ${await resp.text()}`);
+		throw new Error(`fetch failed: status=${resp.status}, url=${resp.url}`);
 	}
 	const $ = cheerio.load(await resp.text());
 

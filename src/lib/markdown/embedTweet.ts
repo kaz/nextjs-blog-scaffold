@@ -36,13 +36,18 @@ const mapFn = async (node: Node) => {
 		return node;
 	}
 
-	const resp = await fetch(`https://publish.twitter.com/oembed?url=${encodeURIComponent(href)}`);
-	if (!resp.ok) {
-		throw new Error(`fetch failed: ${await resp.text()}`);
-	}
+	try {
+		const resp = await fetch(`https://publish.twitter.com/oembed?url=${encodeURIComponent(href)}`);
+		if (!resp.ok) {
+			throw new Error(`fetch failed: status=${resp.status}, url=${resp.url}`);
+		}
 
-	const { html }: { html: string } = await resp.json();
-	return { type: "raw", value: html };
+		const { html }: { html: string } = await resp.json();
+		return { type: "raw", value: html };
+	} catch (e) {
+		console.log("[WARNING] failed to embed tweet:", e);
+	}
+	return node;
 };
 
 module.exports = plugin;
