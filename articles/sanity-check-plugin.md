@@ -1,11 +1,11 @@
 ---
-slug: sanity-check-extention
-title: Sanity check (extention)
+slug: sanity-check-plugin
+title: Sanity check (plugin)
 date: 3000-01-01 00:00:02
 tags: [sanity-check]
 ---
 
-Installed extentions
+Installed plugins
 
 - [remark-gfm](https://www.npmjs.com/package/remark-gfm)
 - [remark-math](https://www.npmjs.com/package/remark-math)

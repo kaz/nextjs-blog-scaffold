@@ -6,6 +6,7 @@ import math from "remark-math";
 import parse from "remark-parse";
 import remark2rehype from "remark-rehype";
 import unified from "unified";
+import extendLink from "./extendLink";
 import numberedFootnote from "./numberedFootnote";
 import plaintext from "./plaintext";
 
@@ -25,6 +26,7 @@ export const markdownToHtml = (md: string) =>
 		.use(remark2rehype)
 		.use(katex)
 		.use(require("rehype-highlight"))
+		.use(extendLink)
 		.use(stringify)
 		.processSync(md)
 		.toString();
