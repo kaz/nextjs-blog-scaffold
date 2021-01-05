@@ -2,11 +2,11 @@ import { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
-import { Article, getArticles } from "../lib/datasource/articles";
+import { Entry, getEntries } from "../lib/datasource";
 import styles from "../styles/index.module.scss";
 
 type Props = {
-	articles: Article[];
+	entries: Entry[];
 };
 
 export const config: PageConfig = {
@@ -14,18 +14,17 @@ export const config: PageConfig = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	const articles = await getArticles();
-	return { props: { articles } };
+	return { props: { entries: await getEntries() } };
 };
 
-const Index = ({ articles }: Props) => {
+const Index = ({ entries }: Props) => {
 	return (
 		<main className={styles.index}>
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
 			</Head>
 			<ul>
-				{articles.map(({ slug, title, date }) => (
+				{entries.map(({ slug, title, date }) => (
 					<li key={slug}>
 						<div>{date.slice(0, 10)}</div>
 						<Link href={`/post/${slug}`}>{title}</Link>

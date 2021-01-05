@@ -14,6 +14,28 @@ export type Article = Omit<Attributes, "date"> & {
 	body: string;
 };
 
+const articlesDir = "./articles";
+const cache = new Map<string, Article>();
+
+export const getArticles = async (): Promise<Article[]> => {
+	if (cache.size) {
+		return Array.from(cache.values());
+	}
+	return Promise.all((await fs.readdir(articlesDir)).filter(entry => entry.endsWith(".md")).map(readArticle));
+};
+export const getArticleBySlug = async (slug: string): Promise<Article | undefined> => {
+	if (!cache.size) {
+		await getArticles();
+	}
+	return cache.get(slug);
+};
+
+const readArticle = async (filePath: string): Promise<Article> => {
+	const raw = await fs.readFile(path.join(articlesDir, filePath), "utf-8");
+	const article = parseArticle(raw);
+	cache.set(article.slug, article);
+	return article;
+};
 const parseArticle = (raw: string): Article => {
 	const { attributes, body } = frontmatter<Partial<Attributes>>(raw);
 
@@ -34,31 +56,4 @@ const parseArticle = (raw: string): Article => {
 		tags: attributes.tags,
 		body,
 	};
-};
-
-let cachedArticles: Article[];
-export const getArticles = async (): Promise<Article[]> => {
-	if (cachedArticles) {
-		return cachedArticles;
-	}
-
-	const articlesDir = process.env.ARTICLES_DIR;
-	if (!articlesDir) {
-		throw new Error("env ARTICLES_DIR is not set");
-	}
-
-	cachedArticles = await Promise.all(
-		(await fs.readdir(articlesDir))
-			.filter(entry => entry.endsWith(".md"))
-			.map(async entry => {
-				const raw = await fs.readFile(path.join(articlesDir, entry), "utf-8");
-				return parseArticle(raw);
-			}),
-	);
-
-	return cachedArticles.sort((a, b) => b.date.localeCompare(a.date));
-};
-export const getArticleBySlug = async (slug: string): Promise<Article | undefined> => {
-	const articles = await getArticles();
-	return articles.find(article => article.slug == slug);
 };
