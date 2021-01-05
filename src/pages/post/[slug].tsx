@@ -3,14 +3,11 @@ import "katex/dist/katex.css";
 import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import SocialShare from "../../components/SocialShare";
-import { Article, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
-import { markdownToDescription, markdownToHtml } from "../../lib/markdown";
+import { CompiledArticle, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
 import styles from "../../styles/pages/post.module.scss";
 
 type Props = {
-	article: Article;
-	content: string;
-	description: string;
+	article: CompiledArticle;
 };
 type UrlQuery = {
 	slug: string;
@@ -30,17 +27,14 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 	if (!params) {
 		throw new Error("params is null");
 	}
-
 	const article = await getArticleBySlug(params.slug);
 	if (!article) {
 		throw new Error("article is not found");
 	}
-
-	const [content, description] = await Promise.all([markdownToHtml(article.body), markdownToDescription(article.body)]);
-	return { props: { article, content, description } };
+	return { props: { article } };
 };
 
-const Post = ({ article: { title, date, tags }, content, description }: Props) => {
+const Post = ({ article: { title, date, tags, description, content } }: Props) => {
 	const pageTitle = `${title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
 	return (
 		<main className={styles.post}>
