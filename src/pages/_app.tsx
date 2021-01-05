@@ -1,6 +1,5 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import CanonicalUrlContext from "../contexts/CanonicalUrlContext";

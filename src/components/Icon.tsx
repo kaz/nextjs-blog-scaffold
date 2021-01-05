@@ -1,4 +1,3 @@
-import React from "react";
 import simpleIcons from "simple-icons";
 
 type Props = {

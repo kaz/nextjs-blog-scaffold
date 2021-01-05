@@ -1,6 +1,5 @@
 import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
-import React from "react";
 import Markdown from "../../components/Markdown";
 import SocialShare from "../../components/SocialShare";
 import { Article, getArticleBySlug, getArticles } from "../../lib/datasource/articles";

@@ -23,19 +23,21 @@ const ExternalItem = ({ item }: { item: External }) => (
 type Props = {
 	entries: Entry[];
 };
-const ArticleList = ({ entries }: Props) => (
-	<ul className={styles.articles}>
-		{entries.map(entry => {
-			if (entry.type == "article") {
-				return <ArticleItem key={entry.slug} item={entry} />;
-			}
-			if (entry.type == "external") {
-				return <ExternalItem key={entry.url} item={entry} />;
-			}
-			// Exhaustive Check
-			const _: never = entry;
-			return _;
-		})}
-	</ul>
-);
+const ArticleList = ({ entries }: Props) => {
+	return (
+		<ul className={styles.articles}>
+			{entries.map(entry => {
+				if (entry.type == "article") {
+					return <ArticleItem key={entry.slug} item={entry} />;
+				}
+				if (entry.type == "external") {
+					return <ExternalItem key={entry.url} item={entry} />;
+				}
+				// Exhaustive Check
+				const _: never = entry;
+				return _;
+			})}
+		</ul>
+	);
+};
 export default ArticleList;
