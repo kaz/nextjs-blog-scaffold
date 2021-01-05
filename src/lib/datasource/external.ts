@@ -3,47 +3,44 @@ import fetch from "cross-fetch";
 import yaml from "js-yaml";
 import Store from "./store";
 
-type RawExternal = {
-	url: string;
+type OgpAttrs = {
 	site: string;
 	title: string;
 	date: Date;
 	tags: string[];
 };
-export type External = Omit<RawExternal, "date"> & {
+type ExternalAttrs = OgpAttrs & {
+	url: string;
+	overwriteTagsWithOgp: boolean;
+};
+export type External = Omit<ExternalAttrs, "date" | "overwriteTagsWithOgp"> & {
+	type: "external";
 	date: string;
 };
 
-const ogp = async (url: string): Promise<Partial<RawExternal>> => {
+const ogp = async (url: string): Promise<Partial<OgpAttrs>> => {
 	const resp = await fetch(url);
 	if (!resp.ok) {
 		throw new Error(`fetch failed: ${await resp.text()}`);
 	}
 	const $ = cheerio.load(await resp.text());
 
-	const extArticle: Partial<RawExternal> = { url };
+	const tags: string[] = [];
+	$(`meta[property="article:tag"]`).each((_, elm) => {
+		const tag = $(elm).attr("content");
+		if (tag) {
+			tags.push(tag);
+		}
+	});
 
-	const site = $(`meta[property="og:site_name"]`).text();
-	if (site) {
-		extArticle.site = site;
-	}
+	const date = $(`meta[property="article:published_time"]`).attr("content");
 
-	const title = $(`meta[property="og:title"]`).text();
-	if (site) {
-		extArticle.title = title;
-	}
-
-	const date = $(`meta[property="article:published_time"]`).text();
-	if (site) {
-		extArticle.date = new Date(date);
-	}
-
-	const tags = $(`meta[property="article:tag"]`);
-	if (tags.length) {
-		extArticle.tags = tags.toArray().map(elm => $(elm).text());
-	}
-
-	return extArticle;
+	return {
+		site: $(`meta[property="og:site_name"]`).attr("content"),
+		title: $(`meta[property="og:title"]`).attr("content"),
+		date: date ? new Date(date) : undefined,
+		tags,
+	};
 };
 
 const store = new Store<External>({
@@ -57,44 +54,40 @@ const store = new Store<External>({
 		return t.url;
 	},
 	async parse(raw) {
-		const data = yaml.safeLoad(raw);
+		const data = yaml.load(raw);
 		if (typeof data != "object") {
 			throw new Error("parse failed: unexpected format");
 		}
 
-		const extArticle: Partial<RawExternal> = data;
-		if (!extArticle.url) {
+		const attrs: Partial<ExternalAttrs> = data;
+		if (!attrs.url) {
 			throw new Error("parse failed: `url` did not exist");
 		}
 
-		const ogpArticle = await ogp(extArticle.url);
+		const ogpAttrs = await ogp(attrs.url);
 
-		const site = extArticle.site || ogpArticle.site;
+		const site = attrs.site || ogpAttrs.site;
 		if (!site) {
 			throw new Error("parse failed: cannot determine `site`");
 		}
 
-		const title = extArticle.title || ogpArticle.title;
+		const title = attrs.title || ogpAttrs.title;
 		if (!title) {
 			throw new Error("parse failed: cannot determine `title`");
 		}
 
-		const date = extArticle.date || ogpArticle.date;
+		const date = attrs.date || ogpAttrs.date;
 		if (!date) {
 			throw new Error("parse failed: cannot determine `date`");
 		}
 
-		const tags = extArticle.tags || ogpArticle.tags;
-		if (!tags) {
-			throw new Error("parse failed: cannot determine `tags`");
-		}
-
 		return {
-			url: extArticle.url,
+			type: "external",
+			url: attrs.url,
 			site,
 			title,
 			date: date.toISOString(),
-			tags,
+			tags: (!attrs.overwriteTagsWithOgp && attrs.tags ? attrs.tags : []).concat(ogpAttrs.tags || []),
 		};
 	},
 });

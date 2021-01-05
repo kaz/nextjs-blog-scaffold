@@ -1,17 +1,18 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-interface Data {
+interface Storable {
+	type: string;
 	date: string;
 }
-interface DataSource<T extends Data> {
+interface DataSource<T extends Storable> {
 	getSourceDir(): string;
 	getFilter(): (ent: string) => boolean;
 	getId(t: T): string;
 	parse(raw: string): Promise<T>;
 }
 
-export default class<T extends Data> {
+export default class<T extends Storable> {
 	private source;
 	private cache;
 
