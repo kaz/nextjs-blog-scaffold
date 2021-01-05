@@ -9,7 +9,7 @@ const transformer: Transformer = tree => {
 	visit<Text>(tree, "text", node => {
 		texts.push(node.value);
 	});
-	const output: Text = { type: "text", value: texts.join("").replace(/\r|\n/g, "") };
+	const output: Text = { type: "text", value: texts.join("").replace(/\s+/g, " ") };
 	return output;
 };
 
