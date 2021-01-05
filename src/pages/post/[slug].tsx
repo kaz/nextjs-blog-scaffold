@@ -5,6 +5,7 @@ import Markdown from "../../components/Markdown";
 import SocialShare from "../../components/SocialShare";
 import styles from "../../styles/post.module.scss";
 import { Article, getArticleBySlug, getArticles } from "../../utils/articles";
+import { markdownToDescription } from "../../utils/markdown";
 
 type Props = {
 	article: Article;
@@ -35,7 +36,7 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article }: Props) => {
 	const pageTitle = `${article.title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
-	const description = `${article.body.slice(0, 100)} ...`;
+	const description = markdownToDescription(article.body);
 
 	return (
 		<main className={styles.post}>
