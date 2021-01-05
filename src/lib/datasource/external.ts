@@ -4,13 +4,13 @@ import yaml from "js-yaml";
 import Store from "./store";
 
 type OgpAttrs = {
-	site: string;
 	title: string;
 	date: Date;
 	tags: string[];
 };
 type ExternalAttrs = OgpAttrs & {
 	url: string;
+	site: string;
 	overwriteTagsWithOgp: boolean;
 };
 export type External = Omit<ExternalAttrs, "date" | "overwriteTagsWithOgp"> & {
@@ -36,7 +36,6 @@ const ogp = async (url: string): Promise<Partial<OgpAttrs>> => {
 	const date = $(`meta[property="article:published_time"]`).attr("content");
 
 	return {
-		site: $(`meta[property="og:site_name"]`).attr("content"),
 		title: $(`meta[property="og:title"]`).attr("content"),
 		date: date ? new Date(date) : undefined,
 		tags,
@@ -66,11 +65,6 @@ const store = new Store<External>({
 
 		const ogpAttrs = await ogp(attrs.url);
 
-		const site = attrs.site || ogpAttrs.site;
-		if (!site) {
-			throw new Error("parse failed: cannot determine `site`");
-		}
-
 		const title = attrs.title || ogpAttrs.title;
 		if (!title) {
 			throw new Error("parse failed: cannot determine `title`");
@@ -84,7 +78,7 @@ const store = new Store<External>({
 		return {
 			type: "external",
 			url: attrs.url,
-			site,
+			site: attrs.site || new URL(attrs.url).hostname,
 			title,
 			date: date.toISOString(),
 			tags: (!attrs.overwriteTagsWithOgp && attrs.tags ? attrs.tags : []).concat(ogpAttrs.tags || []),
