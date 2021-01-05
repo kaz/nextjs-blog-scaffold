@@ -21,20 +21,21 @@ const getMarkdownProcessor = () =>
 		.use(remark2rehype, { allowDangerousHtml: true });
 
 const descriptionLength = 100;
-export const markdownToDescription = (md: string, length = descriptionLength) => {
-	const plain = getMarkdownProcessor().use(plaintext).use(stringify).processSync(md).toString();
-	if (plain.length <= length) {
+export const markdownToDescription = async (md: string) => {
+	const plain = (await getMarkdownProcessor().use(plaintext).use(stringify).process(md)).toString();
+	if (plain.length <= descriptionLength) {
 		return plain;
 	}
-	return `${plain.substr(0, length - 1)}…`;
+	return `${plain.substr(0, descriptionLength - 1)}…`;
 };
 
-export const markdownToHtml = (md: string) =>
-	getMarkdownProcessor()
-		.use(raw)
+export const markdownToHtml = async (md: string) => {
+	const html = await getMarkdownProcessor()
 		.use(katex)
 		.use(require("rehype-highlight"))
 		.use(extendLink)
+		.use(raw)
 		.use(stringify)
-		.processSync(md)
-		.toString();
+		.process(md);
+	return html.toString();
+};
