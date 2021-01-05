@@ -34,17 +34,17 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 	return { props: { article } };
 };
 
-const Post = ({ article: { title, date, tags, description, content } }: Props) => {
+const Post = ({ article: { title, date, image, tags, description, content } }: Props) => {
 	const pageTitle = `${title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
 	return (
 		<main className={styles.post}>
 			<Head>
 				<title>{pageTitle}</title>
 				<meta name="description" content={description} />
-				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:card" content={image ? "summary_large_image" : "summary"} />
 				<meta property="og:title" content={pageTitle} />
 				<meta property="og:type" content="article" />
-				<meta property="og:image" content={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+				<meta property="og:image" content={image || process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 				<meta property="og:description" content={description} />
 				<meta property="og:article:published_time" content={date} />
 				<meta property="og:article:author" content={process.env.NEXT_PUBLIC_AUTHOR_NAME} />

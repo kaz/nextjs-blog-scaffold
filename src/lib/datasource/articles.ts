@@ -6,6 +6,7 @@ type ArticleAttrs = {
 	slug: string;
 	title: string;
 	date: Date;
+	image: string | null;
 	tags: string[];
 };
 export type Article = Omit<ArticleAttrs, "date"> & {
@@ -31,22 +32,17 @@ const store = new Store<Article>({
 	async parse(raw) {
 		const { attributes, body } = frontmatter<Partial<ArticleAttrs>>(raw);
 
-		if (!attributes.title) {
-			throw new Error("parse failed: `title` did not exist");
-		}
 		if (!attributes.date) {
 			throw new Error("parse failed: `date` did not exist");
-		}
-		if (!attributes.tags) {
-			throw new Error("parse failed: `tags` did not exist");
 		}
 
 		return {
 			type: "article",
 			slug: attributes.slug || attributes.date.toISOString(),
-			title: attributes.title,
+			title: attributes.title || attributes.date.toISOString(),
 			date: attributes.date.toISOString(),
-			tags: attributes.tags,
+			image: attributes.image || null,
+			tags: attributes.tags || [],
 			body,
 		};
 	},
