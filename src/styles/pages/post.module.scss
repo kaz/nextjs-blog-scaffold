@@ -104,34 +104,37 @@ $baseHeight: 1.6em;
 	}
 
 	:global(.linkCard) {
-		display: flex;
 		margin: $baseHeight 0;
-		border-radius: $gapSize;
 
-		color: inherit;
-		&:hover {
-			text-decoration: none;
-		}
-
-		border: 1px solid gainsboro;
-
-		> img {
-			height: 128px;
-			margin: auto $baseWidth;
-		}
-		> div {
+		a {
+			display: inline-flex;
 			padding: $baseHeight $baseWidth;
+			border-radius: $gapSize;
 
-			big {
-				display: block;
+			color: inherit;
+			&:hover {
+				text-decoration: none;
 			}
-			small {
-				display: block;
-				color: gray;
+
+			border: 1px solid gainsboro;
+
+			div {
+				big {
+					display: block;
+				}
+				small {
+					display: block;
+					color: gray;
+					text-transform: uppercase;
+				}
+				span {
+					display: block;
+					padding-top: #{$baseHeight / 2};
+				}
 			}
-			span {
-				display: block;
-				padding-top: #{$baseHeight / 2};
+			img {
+				height: 128px;
+				margin: auto 0 auto $baseWidth;
 			}
 		}
 	}

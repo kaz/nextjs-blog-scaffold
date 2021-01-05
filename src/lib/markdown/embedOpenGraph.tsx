@@ -2,8 +2,8 @@ import ogs from "open-graph-scraper";
 import ReactDOMServer from "react-dom/server";
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
-import { CompiledArticle, getArticleBySlug } from "../datasource/articles";
-import { canonicalUrlFromSlug, isLocalUrl, relativeUrlFromSlug, slugFromUrl } from "../utils";
+import { getArticleBySlug } from "../datasource/articles";
+import { canonicalUrlFromSlug, isLocalUrl, slugFromUrl } from "../utils";
 import { isElement, map } from "./helper";
 
 const plugin: Plugin = () => transformer;
@@ -48,7 +48,17 @@ const mapFn = async (node: Node) => {
 				throw new Error(`no such article: ${slug}`);
 			}
 
-			return { type: "raw", value: ReactDOMServer.renderToString(<LocalLinkCard article={article} />) };
+			return {
+				type: "raw",
+				value: ReactDOMServer.renderToString(
+					<LinkCard
+						url={new URL(canonicalUrlFromSlug(article.slug))}
+						title={article.title}
+						description={article.description}
+						image={article.image || process.env.NEXT_PUBLIC_AUTHOR_IMAGE}
+					/>,
+				),
+			};
 		} else {
 			const { result } = await ogs({ url: href });
 			if (!result.success) {
@@ -58,7 +68,17 @@ const mapFn = async (node: Node) => {
 				return node;
 			}
 
-			return { type: "raw", value: ReactDOMServer.renderToString(<RemoteLinkCard og={result} />) };
+			return {
+				type: "raw",
+				value: ReactDOMServer.renderToString(
+					<LinkCard
+						url={new URL(result.ogUrl || result.requestUrl)}
+						title={result.ogTitle || ""}
+						description={result.ogDescription || ""}
+						image={result.ogImage?.url}
+					/>,
+				),
+			};
 		}
 	} catch (e) {
 		console.log("[WARNING] failed to parse ogp metadata:", e);
@@ -66,29 +86,25 @@ const mapFn = async (node: Node) => {
 	return node;
 };
 
-const LocalLinkCard = ({ article }: { article: CompiledArticle }) => {
-	return (
-		<a className="linkCard" href={relativeUrlFromSlug(article.slug)}>
-			<div>
-				<big>{article.title}</big>
-				<small>{canonicalUrlFromSlug(article.slug)}</small>
-				<span>{article.description}</span>
-			</div>
-			{article.image && <img src={article.image} />}
-		</a>
-	);
+type Props = {
+	url: URL;
+	title: string;
+	description: string;
+	image?: string;
 };
-const RemoteLinkCard = ({ og }: { og: ogs.SuccessResult["result"] }) => {
-	const url = og.ogUrl || og.requestUrl;
+const LinkCard = ({ url, title, description, image }: Props) => {
+	const local = isLocalUrl(url.toString());
 	return (
-		<a className="linkCard" href={url} target="_blank">
-			<div>
-				<big>{og.ogTitle}</big>
-				<small>{url}</small>
-				<span>{og.ogDescription || ""}</span>
-			</div>
-			{og.ogImage && <img src={og.ogImage.url} />}
-		</a>
+		<div className="linkCard">
+			<a href={local ? url.pathname : url.toString()} target={local ? undefined : "_blank"}>
+				<div>
+					<big>{title}</big>
+					<small>{url.hostname}</small>
+					<span>{description}</span>
+				</div>
+				{image && <img src={image} />}
+			</a>
+		</div>
 	);
 };
 
