@@ -1,7 +1,7 @@
 import { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import React from "react";
+import ArticleList from "../components/ArticleList";
 import { Entry, getEntries } from "../lib/datasource";
 import styles from "../styles/index.module.scss";
 
@@ -23,14 +23,7 @@ const Index = ({ entries }: Props) => {
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
 			</Head>
-			<ul>
-				{entries.map(({ slug, title, date }) => (
-					<li key={slug}>
-						<div>{date.slice(0, 10)}</div>
-						<Link href={`/post/${slug}`}>{title}</Link>
-					</li>
-				))}
-			</ul>
+			<ArticleList entries={entries} />
 		</main>
 	);
 };
