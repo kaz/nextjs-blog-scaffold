@@ -39,6 +39,7 @@ export const markdownToHtml = async (md: string) => {
 		.use(embedOpenGraph)
 		.use(linkTarget)
 		.use(rehypeRaw)
+		.use(require("rehype-preset-minify"))
 		.use(rehypeStringify)
 		.process(md);
 	return html.toString();
