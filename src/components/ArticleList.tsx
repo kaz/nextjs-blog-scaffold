@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Entry } from "../lib/datasource";
-import { Article } from "../lib/datasource/articles";
-import { External } from "../lib/datasource/external";
+import type { Entry } from "../lib/datasource";
+import type { Article } from "../lib/datasource/articles";
+import type { External } from "../lib/datasource/external";
 import styles from "../styles/components/ArticleList.module.scss";
 
 const ArticleItem = ({ item }: { item: Article }) => (

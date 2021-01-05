@@ -1,6 +1,6 @@
-import { Element } from "hast";
-import { Plugin, Transformer } from "unified";
-import { Node } from "unist";
+import type { Element } from "hast";
+import type { Plugin, Transformer } from "unified";
+import type { Node } from "unist";
 import map from "unist-util-map";
 
 const plugin: Plugin = () => transformer;

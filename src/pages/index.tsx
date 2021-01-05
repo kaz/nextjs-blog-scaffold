@@ -1,4 +1,4 @@
-import { GetStaticProps, PageConfig } from "next";
+import type { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import React from "react";
 import ArticleList from "../components/ArticleList";

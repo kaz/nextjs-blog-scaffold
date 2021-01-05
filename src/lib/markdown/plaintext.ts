@@ -1,5 +1,5 @@
-import { Text } from "hast";
-import { Plugin, Transformer } from "unified";
+import type { Text } from "hast";
+import type { Plugin, Transformer } from "unified";
 import visit from "unist-util-visit";
 
 const plugin: Plugin = () => transformer;

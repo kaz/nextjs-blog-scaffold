@@ -1,5 +1,5 @@
-import { FootnoteReference } from "mdast";
-import { Plugin, Transformer } from "unified";
+import type { FootnoteReference } from "mdast";
+import type { Plugin, Transformer } from "unified";
 import visit from "unist-util-visit";
 
 const plugin: Plugin = () => transformer;
