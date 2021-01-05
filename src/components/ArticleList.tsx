@@ -2,12 +2,13 @@ import Link from "next/link";
 import type { Entry } from "../lib/datasource";
 import type { Article } from "../lib/datasource/articles";
 import type { External } from "../lib/datasource/external";
+import { relativeUrlFromSlug } from "../lib/utils";
 import styles from "../styles/components/ArticleList.module.scss";
 
 const ArticleItem = ({ item }: { item: Article }) => (
 	<li>
 		<div>{item.date.slice(0, 10)}</div>
-		<Link href={`/post/${item.slug}`}>{item.title}</Link>
+		<Link href={relativeUrlFromSlug(item.slug)}>{item.title}</Link>
 	</li>
 );
 const ExternalItem = ({ item }: { item: External }) => (

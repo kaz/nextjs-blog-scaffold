@@ -3,10 +3,11 @@ import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import CanonicalUrlContext from "../contexts/CanonicalUrlContext";
+import { canonicalUrlFromPath } from "../lib/utils";
 import "../styles/_global.scss";
 
 const App = ({ Component, pageProps, router }: AppProps) => {
-	const canonicalUrl = `${process.env.NEXT_PUBLIC_BLOG_URL}${router.asPath}`;
+	const canonicalUrl = canonicalUrlFromPath(router.asPath);
 
 	const [, screenName] =
 		(process.env.NEXT_PUBLIC_AUTHOR_TWITTER_URL || "").match(/^https:\/\/twitter.com\/(.+?)^/) || [];

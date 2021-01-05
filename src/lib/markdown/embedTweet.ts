@@ -1,7 +1,7 @@
 import fetch from "cross-fetch";
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
-import { isElement, map } from "./utils";
+import { isElement, map } from "./helper";
 
 const plugin: Plugin = () => transformer;
 const transformer: Transformer = tree => map(tree, mapFn);

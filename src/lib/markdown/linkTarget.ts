@@ -1,6 +1,7 @@
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
-import { isElement, isLocalURL, map } from "./utils";
+import { isLocalUrl } from "../utils";
+import { isElement, map } from "./helper";
 
 const plugin: Plugin = () => transformer;
 const transformer: Transformer = tree => map(tree, mapFn);
@@ -20,7 +21,7 @@ const mapFn = async (node: Node) => {
 	if (typeof href != "string") {
 		return node;
 	}
-	if (isLocalURL(href)) {
+	if (isLocalUrl(href)) {
 		return node;
 	}
 

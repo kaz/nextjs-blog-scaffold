@@ -3,7 +3,8 @@ import ReactDOMServer from "react-dom/server";
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
 import { CompiledArticle, getArticleBySlug } from "../datasource/articles";
-import { isElement, isLocalURL, map, slug2url, url2slug } from "./utils";
+import { canonicalUrlFromSlug, isLocalUrl, relativeUrlFromSlug, slugFromUrl } from "../utils";
+import { isElement, map } from "./helper";
 
 const plugin: Plugin = () => transformer;
 const transformer: Transformer = tree => map(tree, mapFn);
@@ -36,8 +37,8 @@ const mapFn = async (node: Node) => {
 	}
 
 	try {
-		if (isLocalURL(href)) {
-			const slug = url2slug(href);
+		if (isLocalUrl(href)) {
+			const slug = slugFromUrl(href);
 			if (!slug) {
 				return node;
 			}
@@ -66,12 +67,11 @@ const mapFn = async (node: Node) => {
 };
 
 const LocalLinkCard = ({ article }: { article: CompiledArticle }) => {
-	const url = slug2url(article.slug);
 	return (
-		<a className="linkCard" href={url}>
+		<a className="linkCard" href={relativeUrlFromSlug(article.slug)}>
 			<div>
 				<big>{article.title}</big>
-				<small>{url}</small>
+				<small>{canonicalUrlFromSlug(article.slug)}</small>
 				<span>{article.description}</span>
 			</div>
 			{article.image && <img src={article.image} />}
