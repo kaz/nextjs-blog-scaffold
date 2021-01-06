@@ -25,7 +25,10 @@ export type CompiledArticle = Article & {
 
 const store = new Store<Article>({
 	getSourceDir() {
-		return "./articles";
+		if (!process.env.ARTICLES_DIR) {
+			throw new Error("ARTICLES_DIR is undefined");
+		}
+		return process.env.ARTICLES_DIR;
 	},
 	getFilter() {
 		return ent => ent.endsWith(".md");

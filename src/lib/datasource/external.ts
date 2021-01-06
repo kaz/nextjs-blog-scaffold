@@ -16,7 +16,10 @@ export type External = Omit<ExternalAttrs, "date"> & {
 
 const store = new Store<External>({
 	getSourceDir() {
-		return "./articles/external";
+		if (!process.env.EXTERNAL_DIR) {
+			throw new Error("EXTERNAL_DIR is undefined");
+		}
+		return process.env.EXTERNAL_DIR;
 	},
 	getFilter() {
 		return ent => ent.endsWith(".yml") || ent.endsWith(".yaml");
