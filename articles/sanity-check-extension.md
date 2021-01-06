@@ -1,10 +1,7 @@
 ---
-slug: sanity-check-extension
 title: Sanity check (extension)
-image: null
 tags: [sanity-check]
 date: 3000-01-03 00:00:00
-updated: 3000-01-03 01:00:00
 ---
 
 ## Link Targets

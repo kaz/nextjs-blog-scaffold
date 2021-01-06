@@ -1,4 +1,5 @@
 import frontmatter from "front-matter";
+import path from "path";
 import { getMtimeFromGit } from "../git";
 import { markdownToDescription, markdownToHtml } from "../markdown";
 import { canonicalUrlFromSlug } from "../utils";
@@ -39,21 +40,21 @@ const store = new Store<Article>({
 	async parse(raw, filePath) {
 		const { attributes, body } = frontmatter<Partial<ArticleAttrs>>(raw);
 
+		if (!attributes.slug) {
+			attributes.slug = path.basename(filePath, ".md");
+		}
+		if (!attributes.title) {
+			attributes.title = attributes.slug;
+		}
+		if (attributes.image) {
+			attributes.image = new URL(attributes.image, canonicalUrlFromSlug(attributes.slug)).toString();
+		}
 		if (!attributes.date) {
 			attributes.date = new Date();
 		}
 		if (!attributes.updated) {
 			const mtime = await getMtimeFromGit(filePath);
 			attributes.updated = mtime || attributes.date;
-		}
-		if (!attributes.title) {
-			attributes.title = attributes.date.toISOString();
-		}
-		if (!attributes.slug) {
-			attributes.slug = attributes.title;
-		}
-		if (attributes.image) {
-			attributes.image = new URL(attributes.image, canonicalUrlFromSlug(attributes.slug)).toString();
 		}
 
 		return {

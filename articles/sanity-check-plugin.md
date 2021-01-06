@@ -1,10 +1,7 @@
 ---
-slug: sanity-check-plugin
 title: Sanity check (plugin)
-image: null
 tags: [sanity-check]
 date: 3000-01-02 00:00:00
-updated: 3000-01-02 01:00:00
 ---
 
 Installed plugins
