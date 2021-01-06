@@ -8,9 +8,9 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import unified from "unified";
 import embedOpenGraph from "./embedOpenGraph";
-import embedTweet from "./embedTweet";
 import linkTarget from "./linkTarget";
 import numberedFootnote from "./numberedFootnote";
+import oEmbed from "./oEmbed";
 import plaintext from "./plaintext";
 
 const getMarkdownProcessor = () =>
@@ -35,7 +35,7 @@ export const markdownToHtml = async (md: string) => {
 	const html = await getMarkdownProcessor()
 		.use(rehypeKatex)
 		.use(require("rehype-highlight"))
-		.use(embedTweet)
+		.use(oEmbed)
 		.use(embedOpenGraph)
 		.use(linkTarget)
 		.use(rehypeRaw)

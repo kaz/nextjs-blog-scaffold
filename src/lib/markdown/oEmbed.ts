@@ -1,6 +1,6 @@
-import fetch from "cross-fetch";
 import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
+import { getEmbedHTML } from "../embed";
 import { isElement, map } from "./helper";
 
 const plugin: Plugin = () => transformer;
@@ -32,20 +32,16 @@ const mapFn = async (node: Node) => {
 	if (typeof href != "string") {
 		return node;
 	}
-	if (!href.match(/^https:\/\/twitter\.com\/.+?\/status\/\d+$/)) {
-		return node;
-	}
 
 	try {
-		const resp = await fetch(`https://publish.twitter.com/oembed?url=${encodeURIComponent(href)}`);
-		if (!resp.ok) {
-			throw new Error(`fetch failed: status=${resp.status}, url=${resp.url}`);
+		const embedHTML = await getEmbedHTML(href);
+		if (!embedHTML) {
+			return node;
 		}
 
-		const { html }: { html: string } = await resp.json();
-		return { type: "raw", value: html };
+		return { type: "raw", value: embedHTML };
 	} catch (e) {
-		console.log("[WARNING] failed to embed tweet:", e);
+		console.log("[WARNING] failed to embed content:", e);
 	}
 	return node;
 };
