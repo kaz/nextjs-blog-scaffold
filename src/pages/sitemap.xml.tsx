@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, GetStaticProps } from "next";
 import type { ReactNode } from "react";
 import ReactDOMServer from "react-dom/server";
 import { getLatestTimestamp, getTags } from "../lib/datasource";
@@ -23,7 +23,7 @@ type Props = {
 };
 type SiteUrl = {
 	loc: string;
-	lastmod?: Date;
+	lastmod?: string;
 	changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
 	priority?: number;
 };
@@ -31,7 +31,7 @@ type SiteUrl = {
 const getIndexSitemapEntries = async (): Promise<SiteUrl[]> => [
 	{
 		loc: canonicalUrlFromPath("/"),
-		lastmod: await getLatestTimestamp(),
+		lastmod: (await getLatestTimestamp()).toISOString(),
 	},
 ];
 const getPostSitemapEntries = async (): Promise<SiteUrl[]> => {
@@ -39,7 +39,7 @@ const getPostSitemapEntries = async (): Promise<SiteUrl[]> => {
 	return articles.map(article => {
 		return {
 			loc: canonicalUrlFromSlug(article.slug),
-			lastmod: new Date(article.updated),
+			lastmod: new Date(article.updated).toISOString(),
 		};
 	});
 };
@@ -49,30 +49,45 @@ const getTagSitemapEntries = async (): Promise<SiteUrl[]> => {
 		tags.map(async tag => {
 			return {
 				loc: canonicalUrlFromTag(tag),
-				lastmod: await getLatestTimestamp(tag),
+				lastmod: (await getLatestTimestamp(tag)).toISOString(),
 			};
 		}),
 	);
 };
 
 export const getContent = async () => {
-	const props: Props = {
-		urls: (await Promise.all([getIndexSitemapEntries(), getPostSitemapEntries(), getTagSitemapEntries()])).flat(),
-	};
-	return `<?xml version="1.0" encoding="UTF-8"?>${ReactDOMServer.renderToStaticMarkup(Sitemap(props))}`;
+	const result = await getStaticProps({});
+	if (!("props" in result)) {
+		throw new Error("failed to get props");
+	}
+	return `<?xml version="1.0" encoding="UTF-8"?>${ReactDOMServer.renderToStaticMarkup(Sitemap(result.props))}`;
 };
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+
+const getStaticProps: GetStaticProps<Props> = async () => {
+	return {
+		props: {
+			urls: (await Promise.all([getIndexSitemapEntries(), getPostSitemapEntries(), getTagSitemapEntries()])).flat(),
+		},
+	};
+};
+const getServerSideProps: GetServerSideProps<{}> = async ({ res }) => {
 	res.setHeader("Content-Type", "application/xml");
-	res.end(getContent());
+	res.end(await getContent());
 	return { props: {} };
 };
+
+if (process.env.npm_lifecycle_event == "export") {
+	module.exports.getStaticProps = getStaticProps;
+} else {
+	module.exports.getServerSideProps = getServerSideProps;
+}
 
 const Sitemap = ({ urls }: Props) => (
 	<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		{urls.map(url => (
 			<url key={url.loc}>
 				<loc>{url.loc}</loc>
-				{url.lastmod && <lastmod>{url.lastmod.toISOString()}</lastmod>}
+				{url.lastmod && <lastmod>{url.lastmod}</lastmod>}
 				{url.changefreq && <changefreq>{url.changefreq}</changefreq>}
 				{url.priority && <priority>{url.priority}</priority>}
 			</url>
