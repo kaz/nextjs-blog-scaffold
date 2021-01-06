@@ -10,7 +10,7 @@ interface DataSource<T extends Storable> {
 	getSourceDir(): string;
 	getFilter(): (ent: string) => boolean;
 	getId(t: T): string;
-	parse(raw: string): Promise<T>;
+	parse(raw: string, filePath: string): Promise<T>;
 }
 
 export default class<T extends Storable> {
@@ -22,9 +22,10 @@ export default class<T extends Storable> {
 		this.cache = new Map<string, T>();
 	}
 
-	async read(filePath: string) {
-		const raw = await fs.readFile(path.join(this.source.getSourceDir(), filePath), "utf-8");
-		const data = await this.source.parse(raw);
+	async read(dirEnt: string) {
+		const filePath = path.join(this.source.getSourceDir(), dirEnt);
+		const raw = await fs.readFile(filePath, "utf-8");
+		const data = await this.source.parse(raw, filePath);
 		this.cache.set(this.source.getId(data), data);
 		return data;
 	}

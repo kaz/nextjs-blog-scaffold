@@ -1,4 +1,5 @@
 import frontmatter from "front-matter";
+import { getMtimeFromGit } from "../git";
 import { markdownToDescription, markdownToHtml } from "../markdown";
 import Store from "./store";
 
@@ -31,14 +32,15 @@ const store = new Store<Article>({
 	getId(t) {
 		return t.slug;
 	},
-	async parse(raw) {
+	async parse(raw, filePath) {
 		const { attributes, body } = frontmatter<Partial<ArticleAttrs>>(raw);
 
 		if (!attributes.date) {
 			attributes.date = new Date();
 		}
 		if (!attributes.updated) {
-			attributes.updated = attributes.date;
+			const mtime = await getMtimeFromGit(filePath);
+			attributes.updated = mtime || attributes.date;
 		}
 		if (!attributes.title) {
 			attributes.title = attributes.date.toISOString();

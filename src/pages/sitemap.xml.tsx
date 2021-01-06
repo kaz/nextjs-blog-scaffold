@@ -1,9 +1,9 @@
 import type { GetServerSideProps } from "next";
 import type { ReactNode } from "react";
 import ReactDOMServer from "react-dom/server";
+import { getLatestTimestamp, getTags } from "../lib/datasource";
+import { getArticles } from "../lib/datasource/articles";
 import { canonicalUrlFromPath, canonicalUrlFromSlug, canonicalUrlFromTag } from "../lib/utils";
-import { getStaticPaths as getPostsStaticPaths } from "./posts/[slug]";
-import { getStaticPaths as getTagsStaticPaths } from "./tags/[tag]";
 
 declare global {
 	namespace JSX {
@@ -28,42 +28,37 @@ type SiteUrl = {
 	priority?: number;
 };
 
-const getIndex = async (): Promise<SiteUrl[]> => [
+const getIndexSitemapEntries = async (): Promise<SiteUrl[]> => [
 	{
 		loc: canonicalUrlFromPath("/"),
-		lastmod: new Date(),
+		lastmod: await getLatestTimestamp(),
 	},
 ];
-const getPosts = async (): Promise<SiteUrl[]> => {
-	const { paths } = await getPostsStaticPaths({});
-	return paths.map(path => {
-		if (typeof path != "object") {
-			throw new Error(`unexpected path: ${path}`);
-		}
-		const { slug } = path.params;
+const getPostSitemapEntries = async (): Promise<SiteUrl[]> => {
+	const articles = await getArticles();
+	return articles.map(article => {
 		return {
-			loc: canonicalUrlFromSlug(slug),
-			lastmod: new Date(),
+			loc: canonicalUrlFromSlug(article.slug),
+			lastmod: new Date(article.updated),
 		};
 	});
 };
-const getTags = async (): Promise<SiteUrl[]> => {
-	const { paths } = await getTagsStaticPaths({});
-	return paths.map(path => {
-		if (typeof path != "object") {
-			throw new Error(`unexpected path: ${path}`);
-		}
-		const { tag } = path.params;
-		return {
-			loc: canonicalUrlFromTag(tag),
-			lastmod: new Date(),
-		};
-	});
+const getTagSitemapEntries = async (): Promise<SiteUrl[]> => {
+	const tags = await getTags();
+	return Promise.all(
+		tags.map(async tag => {
+			return {
+				loc: canonicalUrlFromTag(tag),
+				lastmod: await getLatestTimestamp(tag),
+			};
+		}),
+	);
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-	const urls = (await Promise.all([getIndex(), getPosts(), getTags()])).flat();
-	const props: Props = { urls };
+	const props: Props = {
+		urls: (await Promise.all([getIndexSitemapEntries(), getPostSitemapEntries(), getTagSitemapEntries()])).flat(),
+	};
 
 	res.setHeader("Content-Type", "application/xml");
 	res.write(`<?xml version="1.0" encoding="UTF-8"?>`);
