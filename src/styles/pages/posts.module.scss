@@ -114,6 +114,9 @@ $borderSize: 2px;
 		background-color: whitesmoke;
 		font-family: Courier, monospace;
 	}
+	img {
+		max-width: 100%;
+	}
 	table {
 		border-collapse: collapse;
 		th,
