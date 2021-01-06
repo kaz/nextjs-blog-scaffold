@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
+import Analytics from "../components/Analytics";
 
 export default class extends Document {
 	render() {
@@ -8,6 +9,7 @@ export default class extends Document {
 				<body>
 					<Main />
 					<NextScript />
+					<Analytics />
 				</body>
 			</Html>
 		);
