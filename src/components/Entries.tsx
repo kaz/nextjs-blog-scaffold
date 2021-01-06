@@ -24,7 +24,7 @@ const ExternalItem = ({ item }: { item: External }) => (
 type Props = {
 	entries: Entry[];
 };
-const ArticleList = ({ entries }: Props) => {
+const Entries = ({ entries }: Props) => {
 	return (
 		<ul className={styles.articles}>
 			{entries.map(entry => {
@@ -41,4 +41,4 @@ const ArticleList = ({ entries }: Props) => {
 		</ul>
 	);
 };
-export default ArticleList;
+export default Entries;

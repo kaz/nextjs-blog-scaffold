@@ -1,7 +1,7 @@
 import type { GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
-import ArticleList from "../components/ArticleList";
-import { Entry, getEntries } from "../lib/datasource";
+import Entries from "../components/Entries";
+import { Entry, getEntriesByTag } from "../lib/datasource";
 import styles from "../styles/pages/index.module.scss";
 
 type Props = {
@@ -13,7 +13,7 @@ export const config: PageConfig = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	return { props: { entries: await getEntries() } };
+	return { props: { entries: await getEntriesByTag() } };
 };
 
 const Index = ({ entries }: Props) => {
@@ -22,7 +22,7 @@ const Index = ({ entries }: Props) => {
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
 			</Head>
-			<ArticleList entries={entries} />
+			<Entries entries={entries} />
 		</main>
 	);
 };
