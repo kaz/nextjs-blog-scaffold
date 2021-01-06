@@ -1,8 +1,10 @@
 ---
 slug: sanity-check
 title: Sanity check
-date: 3000-01-01 00:00:01
+image: markdown-mark.svg
 tags: [sanity-check]
+date: 3000-01-01 00:00:00
+updated: 3000-01-01 01:00:00
 ---
 
 src: [CommonMark Spec](https://spec.commonmark.org/0.29/) Version 0.29 (2019-04-06)

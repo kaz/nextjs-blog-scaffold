@@ -1,6 +1,7 @@
 import frontmatter from "front-matter";
 import { getMtimeFromGit } from "../git";
 import { markdownToDescription, markdownToHtml } from "../markdown";
+import { canonicalUrlFromSlug } from "../utils";
 import Store from "./store";
 
 type ArticleAttrs = {
@@ -47,6 +48,9 @@ const store = new Store<Article>({
 		}
 		if (!attributes.slug) {
 			attributes.slug = attributes.title;
+		}
+		if (attributes.image) {
+			attributes.image = new URL(attributes.image, canonicalUrlFromSlug(attributes.slug)).toString();
 		}
 
 		return {
