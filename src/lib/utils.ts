@@ -4,6 +4,6 @@ export const isLocalUrl = (url: string) => !url.startsWith("http") || url.starts
 
 export const slugFromUrl = (url: string) => (new URL(url, localURL).pathname.match(/^\/post\/(.+?)\/$/) || [])[1];
 
-export const relativeUrlFromSlug = (slug: string) => `/post/${slug}/`;
+export const relativeUrlFromSlug = (slug: string) => `/posts/${slug}/`;
 export const canonicalUrlFromSlug = (slug: string) => canonicalUrlFromPath(relativeUrlFromSlug(slug));
 export const canonicalUrlFromPath = (path: string) => new URL(path, localURL).toString();

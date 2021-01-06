@@ -4,7 +4,7 @@ import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import SocialShare from "../../components/SocialShare";
 import { CompiledArticle, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
-import styles from "../../styles/pages/post.module.scss";
+import styles from "../../styles/pages/posts.module.scss";
 
 type Props = {
 	article: CompiledArticle;
