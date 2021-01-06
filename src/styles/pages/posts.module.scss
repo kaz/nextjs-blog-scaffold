@@ -1,8 +1,11 @@
 @use "../mixins" as *;
 
-$gapSize: 0.2em;
 $baseWidth: 2em;
 $baseHeight: 1.6em;
+
+$gapSize: 0.2em;
+$metaSize: 24px;
+$borderSize: 2px;
 
 .post {
 	@include pageContainer;
@@ -14,25 +17,42 @@ $baseHeight: 1.6em;
 	h1 {
 		margin: 0 0 0.2em 0;
 	}
-	a {
+	> div {
 		display: flex;
 		align-items: center;
-		text-decoration: none;
 		color: gray;
 
-		img {
-			width: 1.5em;
-			height: 1.5em;
-			border-radius: 1.5em;
-			margin-right: 0.5em;
+		> img {
+			width: $metaSize;
+			height: $metaSize;
+			border-radius: #{$metaSize / 2};
+		}
+		> a {
+			text-decoration: none;
+			color: inherit;
+			margin-left: #{$gapSize * 2};
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		> span {
+			display: inline-block;
+			margin: 0 #{$gapSize * 4};
+
+			width: $borderSize;
+			height: $metaSize;
+
+			background-color: gainsboro;
+			transform: skewX(-10deg);
 		}
 	}
 }
 .content {
 	hr {
-		height: 2px;
 		border: none;
 		background-color: gainsboro;
+		height: $borderSize;
 		margin: $baseHeight 0;
 	}
 	h1,

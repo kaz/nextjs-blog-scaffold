@@ -6,4 +6,8 @@ export const slugFromUrl = (url: string) => (new URL(url, localURL).pathname.mat
 
 export const relativeUrlFromSlug = (slug: string) => `/posts/${slug}/`;
 export const canonicalUrlFromSlug = (slug: string) => canonicalUrlFromPath(relativeUrlFromSlug(slug));
+
+export const relativeUrlFromTag = (tag: string) => `/tags/${tag}/`;
+export const canonicalUrlFromTag = (tag: string) => canonicalUrlFromPath(relativeUrlFromTag(tag));
+
 export const canonicalUrlFromPath = (path: string) => new URL(path, localURL).toString();

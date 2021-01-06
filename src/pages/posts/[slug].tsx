@@ -2,8 +2,12 @@ import "highlight.js/styles/github.css";
 import "katex/dist/katex.css";
 import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
+import Link from "next/link";
+import React from "react";
+import { TagIcon } from "../../components/Icon";
 import SocialShare from "../../components/SocialShare";
 import { CompiledArticle, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
+import { relativeUrlFromTag } from "../../lib/utils";
 import styles from "../../styles/pages/posts.module.scss";
 
 type Props = {
@@ -55,10 +59,21 @@ const Post = ({ article: { title, date, image, tags, description, content } }: P
 			<section className={styles.meta}>
 				<small>{date.slice(0, 10)}</small>
 				<h1>{title}</h1>
-				<a href="#profile">
+				<div>
 					<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
-					{process.env.NEXT_PUBLIC_AUTHOR_NAME}
-				</a>
+					<a href="#profile">{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>
+					{tags.length && (
+						<React.Fragment>
+							<span></span>
+							<TagIcon />
+							{tags.map(tag => (
+								<Link key={tag} href={relativeUrlFromTag(tag)}>
+									{tag}
+								</Link>
+							))}
+						</React.Fragment>
+					)}
+				</div>
 			</section>
 			<SocialShare pageTitle={pageTitle} />
 			<article className={styles.content} dangerouslySetInnerHTML={{ __html: content }} />

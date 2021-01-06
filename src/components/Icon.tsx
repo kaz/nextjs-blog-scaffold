@@ -1,3 +1,4 @@
+import { TagIcon } from "@primer/octicons-react";
 import simpleIcons from "simple-icons";
 
 type Props = {
@@ -22,3 +23,5 @@ export const GithubIcon = icon("github");
 export const TwitterIcon = icon("twitter");
 export const FacebookIcon = icon("facebook");
 export const HatenabookmarkIcon = icon("hatenabookmark");
+
+export { TagIcon };

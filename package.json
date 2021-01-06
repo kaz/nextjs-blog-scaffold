@@ -7,6 +7,7 @@
 		"export": "next export"
 	},
 	"dependencies": {
+		"@primer/octicons-react": "^11.2.0",
 		"front-matter": "^4.0.2",
 		"js-yaml": "^4.0.0",
 		"metascraper": "^5.16.7",
