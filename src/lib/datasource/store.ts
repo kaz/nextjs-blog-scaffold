@@ -3,6 +3,7 @@ import path from "path";
 
 interface Storable {
 	type: string;
+	tags: string[];
 	date: string;
 }
 interface DataSource<T extends Storable> {

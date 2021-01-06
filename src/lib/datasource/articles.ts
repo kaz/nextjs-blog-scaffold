@@ -5,13 +5,15 @@ import Store from "./store";
 type ArticleAttrs = {
 	slug: string;
 	title: string;
-	date: Date;
 	image: string | null;
 	tags: string[];
+	date: Date;
+	updated: Date;
 };
-export type Article = Omit<ArticleAttrs, "date"> & {
+export type Article = Omit<ArticleAttrs, "date" | "updated"> & {
 	type: "article";
 	date: string;
+	updated: string;
 	body: string;
 };
 export type CompiledArticle = Article & {
@@ -33,16 +35,26 @@ const store = new Store<Article>({
 		const { attributes, body } = frontmatter<Partial<ArticleAttrs>>(raw);
 
 		if (!attributes.date) {
-			throw new Error("parse failed: `date` did not exist");
+			attributes.date = new Date();
+		}
+		if (!attributes.updated) {
+			attributes.updated = attributes.date;
+		}
+		if (!attributes.title) {
+			attributes.title = attributes.date.toISOString();
+		}
+		if (!attributes.slug) {
+			attributes.slug = attributes.title;
 		}
 
 		return {
 			type: "article",
-			slug: attributes.slug || attributes.title || attributes.date.toISOString(),
-			title: attributes.title || attributes.date.toISOString(),
-			date: attributes.date.toISOString(),
+			slug: attributes.slug,
+			title: attributes.title,
 			image: attributes.image || null,
 			tags: attributes.tags || [],
+			date: attributes.date.toISOString(),
+			updated: attributes.updated.toISOString(),
 			body,
 		};
 	},

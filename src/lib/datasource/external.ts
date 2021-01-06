@@ -6,11 +6,10 @@ type ExternalAttrs = {
 	url: string;
 	publisher: string;
 	title: string;
-	date: Date;
-	image: string | null;
 	tags: string[];
+	date: Date;
 };
-export type External = Omit<ExternalAttrs, "date" | "overwriteTagsWithOgp"> & {
+export type External = Omit<ExternalAttrs, "date"> & {
 	type: "external";
 	date: string;
 };
@@ -37,25 +36,35 @@ const store = new Store<External>({
 		}
 
 		const metadata = await getMetadata(attrs.url);
-
-		const title = attrs.title || metadata.title;
-		if (!title) {
-			throw new Error("parse failed: cannot determine `title`");
+		if (!attrs.publisher) {
+			if (metadata.publisher) {
+				attrs.publisher = metadata.publisher;
+			} else {
+				attrs.publisher = new URL(metadata.url).hostname;
+			}
 		}
-
-		const date = attrs.date || metadata.date;
-		if (!date) {
-			throw new Error("parse failed: cannot determine `date`");
+		if (!attrs.title) {
+			if (metadata.title) {
+				attrs.title = metadata.title;
+			} else {
+				attrs.title = new URL(metadata.url).pathname;
+			}
+		}
+		if (!attrs.date) {
+			if (metadata.date) {
+				attrs.date = new Date(metadata.date);
+			} else {
+				attrs.date = new Date();
+			}
 		}
 
 		return {
 			type: "external",
 			url: metadata.url,
-			publisher: attrs.publisher || metadata.publisher || new URL(attrs.url).hostname,
-			title,
-			date: new Date(date).toISOString(),
-			image: attrs.image || metadata.image || null,
+			publisher: attrs.publisher,
+			title: attrs.title,
 			tags: attrs.tags || [],
+			date: attrs.date.toISOString(),
 		};
 	},
 });
