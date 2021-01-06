@@ -2,6 +2,7 @@ import metascraper from "metascraper";
 import date from "metascraper-date";
 import description from "metascraper-description";
 import image from "metascraper-image";
+import publisher from "metascraper-publisher";
 import title from "metascraper-title";
 import url from "metascraper-url";
 import fetch from "node-fetch";
@@ -13,11 +14,12 @@ export type Metadata = {
 	date?: string;
 	description?: string;
 	image?: string;
+	publisher?: string;
 	title?: string;
 	url: string;
 };
 
-const scraper = metascraper([date(), description(), image(), title(), url()]);
+const scraper = metascraper([date(), description(), image(), publisher(), title(), url()]);
 const getRemoteMetadata = async (url: string): Promise<Metadata> => {
 	const resp = await fetch(url);
 	if (!resp.ok) {
@@ -30,6 +32,7 @@ const getRemoteMetadata = async (url: string): Promise<Metadata> => {
 		date: meta.date || undefined,
 		description: meta.description || undefined,
 		image: meta.image || undefined,
+		publisher: meta.publisher || undefined,
 		title: meta.title || undefined,
 		url: meta.url || url,
 	};
