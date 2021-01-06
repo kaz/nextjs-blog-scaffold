@@ -40,6 +40,7 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article: { title, date, image, tags, description, content } }: Props) => {
 	const pageTitle = `${title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
+
 	return (
 		<main className={styles.post}>
 			<Head>
@@ -50,10 +51,10 @@ const Post = ({ article: { title, date, image, tags, description, content } }: P
 				<meta property="og:type" content="article" />
 				<meta property="og:image" content={image || process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 				<meta property="og:description" content={description} />
-				<meta property="og:article:published_time" content={date} />
-				<meta property="og:article:author" content={process.env.NEXT_PUBLIC_AUTHOR_NAME} />
+				<meta property="article:published_time" content={date} />
+				<meta property="article:author" content={process.env.NEXT_PUBLIC_AUTHOR_NAME} />
 				{tags.map(tag => (
-					<meta property="og:article:tag" content={tag} key={tag} />
+					<meta property="article:tag" content={tag} key={tag} />
 				))}
 			</Head>
 			<section className={styles.meta}>

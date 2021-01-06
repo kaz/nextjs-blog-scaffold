@@ -17,10 +17,19 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 const Index = ({ entries }: Props) => {
+	const pageTitle = process.env.NEXT_PUBLIC_BLOG_TITLE;
+	const description = process.env.NEXT_PUBLIC_BLOG_DESCRIPTION;
+
 	return (
 		<main className={styles.index}>
 			<Head>
-				<title>{process.env.NEXT_PUBLIC_BLOG_TITLE}</title>
+				<title>{pageTitle}</title>
+				<meta name="description" content={description} />
+				<meta name="twitter:card" content="summary" />
+				<meta property="og:title" content={pageTitle} />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+				<meta property="og:description" content={description} />
 			</Head>
 			<Entries entries={entries} />
 		</main>

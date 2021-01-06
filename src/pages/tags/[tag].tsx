@@ -31,12 +31,19 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 };
 
 const Tag = ({ tag, entries }: Props) => {
+	const pageTitle = `Tag:${tag} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
+	const description = `Articles tagged with "${tag}"`;
+
 	return (
 		<main className={styles.index}>
 			<Head>
-				<title>
-					Tag:{tag} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
-				</title>
+				<title>{pageTitle}</title>
+				<meta name="description" content={description} />
+				<meta name="twitter:card" content="summary" />
+				<meta property="og:title" content={pageTitle} />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+				<meta property="og:description" content={description} />
 			</Head>
 			<h2>
 				<TagIcon size={24} /> {tag}
