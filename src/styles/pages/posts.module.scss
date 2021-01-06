@@ -155,8 +155,11 @@ $borderSize: 2px;
 					padding-top: #{$baseHeight / 2};
 				}
 			}
+
+			$cardImageSize: 8em;
 			img {
-				height: 128px;
+				height: $cardImageSize;
+				max-width: #{$cardImageSize * 2};
 				margin: auto 0 auto $baseWidth;
 			}
 		}

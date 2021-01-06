@@ -63,7 +63,7 @@ const Post = ({ article: { title, date, image, tags, description, content } }: P
 				<div>
 					<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
 					<a href="#profile">{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>
-					{tags.length && (
+					{tags.length > 0 && (
 						<React.Fragment>
 							<span></span>
 							<TagIcon />
