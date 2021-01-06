@@ -1,6 +1,7 @@
 import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Entries from "../../components/Entries";
+import { TagIcon } from "../../components/Icon";
 import { Entry, getEntriesByTag, getTags } from "../../lib/datasource";
 import styles from "../../styles/pages/index.module.scss";
 
@@ -37,7 +38,9 @@ const Tag = ({ tag, entries }: Props) => {
 					Tag:{tag} | {process.env.NEXT_PUBLIC_BLOG_TITLE}
 				</title>
 			</Head>
-			<h2>Tag:{tag}</h2>
+			<h2>
+				<TagIcon size={24} /> {tag}
+			</h2>
 			<Entries entries={entries} />
 		</main>
 	);
