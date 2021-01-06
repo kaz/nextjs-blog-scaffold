@@ -9,7 +9,7 @@ declare global {
 	namespace JSX {
 		interface IntrinsicElements {
 			urlset: { children?: ReactNode; xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9" };
-			url: { children: ReactNode };
+			url: { children: ReactNode; key: string };
 			loc: { children: string };
 			lastmod: { children: string };
 			changefreq: { children: string };
@@ -55,22 +55,22 @@ const getTagSitemapEntries = async (): Promise<SiteUrl[]> => {
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getContent = async () => {
 	const props: Props = {
 		urls: (await Promise.all([getIndexSitemapEntries(), getPostSitemapEntries(), getTagSitemapEntries()])).flat(),
 	};
-
+	return `<?xml version="1.0" encoding="UTF-8"?>${ReactDOMServer.renderToStaticMarkup(Sitemap(props))}`;
+};
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 	res.setHeader("Content-Type", "application/xml");
-	res.write(`<?xml version="1.0" encoding="UTF-8"?>`);
-	res.end(ReactDOMServer.renderToStaticMarkup(Sitemap(props)));
-
-	return { props };
+	res.end(getContent());
+	return { props: {} };
 };
 
 const Sitemap = ({ urls }: Props) => (
 	<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		{urls.map(url => (
-			<url>
+			<url key={url.loc}>
 				<loc>{url.loc}</loc>
 				{url.lastmod && <lastmod>{url.lastmod.toISOString()}</lastmod>}
 				{url.changefreq && <changefreq>{url.changefreq}</changefreq>}

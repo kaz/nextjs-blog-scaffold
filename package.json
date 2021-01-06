@@ -4,7 +4,8 @@
 		"dev": "next",
 		"build": "next build",
 		"start": "next start",
-		"export": "next export"
+		"export": "next export",
+		"postexport": "ts-node -O '{\"module\":\"commonjs\",\"jsx\":\"react-jsx\"}' src/lib/postexport"
 	},
 	"dependencies": {
 		"@primer/octicons-react": "^11.2.0",
@@ -53,6 +54,7 @@
 		"@types/simple-icons": "^2.5.0",
 		"@types/unist": "^2.0.3",
 		"sass": "^1.32.0",
+		"ts-node": "^9.1.1",
 		"typescript": "^4.1.3",
 		"unified": "^9.2.0"
 	}
