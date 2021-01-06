@@ -40,25 +40,13 @@ const store = new Store<External>({
 
 		const metadata = await getMetadata(attrs.url);
 		if (!attrs.publisher) {
-			if (metadata.publisher) {
-				attrs.publisher = metadata.publisher;
-			} else {
-				attrs.publisher = new URL(metadata.url).hostname;
-			}
+			attrs.publisher = metadata.publisher || new URL(metadata.url).hostname;
 		}
 		if (!attrs.title) {
-			if (metadata.title) {
-				attrs.title = metadata.title;
-			} else {
-				attrs.title = new URL(metadata.url).pathname;
-			}
+			attrs.title = metadata.title || new URL(metadata.url).pathname;
 		}
 		if (!attrs.date) {
-			if (metadata.date) {
-				attrs.date = new Date(metadata.date);
-			} else {
-				attrs.date = new Date();
-			}
+			attrs.date = new Date(metadata.date || "");
 		}
 
 		return {
