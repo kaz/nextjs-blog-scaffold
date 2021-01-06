@@ -19,13 +19,13 @@ export const config: PageConfig = {
 
 export const getStaticPaths: GetStaticPaths<UrlQuery> = async () => {
 	const articles = await getArticles();
-	const paths = articles.map(article => ({ params: article }));
+	const paths = articles.map(({ slug }) => ({ params: { slug: encodeURIComponent(slug) } }));
 	return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }) => {
 	if (!params) {
-		throw new Error("params is null");
+		throw new Error("params is undefined");
 	}
 	const article = await getArticleBySlug(params.slug);
 	if (!article) {

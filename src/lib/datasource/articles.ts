@@ -38,7 +38,7 @@ const store = new Store<Article>({
 
 		return {
 			type: "article",
-			slug: attributes.slug || attributes.date.toISOString(),
+			slug: attributes.slug || attributes.title || attributes.date.toISOString(),
 			title: attributes.title || attributes.date.toISOString(),
 			date: attributes.date.toISOString(),
 			image: attributes.image || null,
