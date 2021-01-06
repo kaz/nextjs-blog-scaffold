@@ -1,8 +1,8 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import CanonicalUrlContext from "../contexts/CanonicalUrlContext";
 import { canonicalUrlFromPath } from "../lib/utils";
 import "../styles/_global.scss";
 
@@ -13,7 +13,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
 		(process.env.NEXT_PUBLIC_AUTHOR_TWITTER_URL || "").match(/^https:\/\/twitter.com\/(.+?)^/) || [];
 
 	return (
-		<CanonicalUrlContext.Provider value={canonicalUrl}>
+		<React.Fragment>
 			<Head>
 				<meta charSet="utf-8" />
 				<meta name="format-detection" content="telephone=no" />
@@ -30,7 +30,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
 			<Header />
 			<Component {...pageProps} />
 			<Footer />
-		</CanonicalUrlContext.Provider>
+		</React.Fragment>
 	);
 };
 export default App;
