@@ -7,10 +7,10 @@ import remarkMath from "remark-math";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import unified from "unified";
-import embedOpenGraph from "./embedOpenGraph";
 import linkTarget from "./linkTarget";
 import numberedFootnote from "./numberedFootnote";
 import oEmbed from "./oEmbed";
+import openGraph from "./openGraph";
 import plaintext from "./plaintext";
 
 const getMarkdownProcessor = () =>
@@ -36,7 +36,7 @@ export const markdownToHtml = async (md: string) => {
 		.use(rehypeKatex)
 		.use(require("rehype-highlight"))
 		.use(oEmbed)
-		.use(embedOpenGraph)
+		.use(openGraph)
 		.use(linkTarget)
 		.use(rehypeRaw)
 		.use(require("rehype-preset-minify"))
