@@ -8,6 +8,7 @@
 		"postexport": "ts-node -O '{\"module\":\"commonjs\",\"jsx\":\"react-jsx\"}' src/lib/postexport"
 	},
 	"dependencies": {
+		"@fontsource/exo-2": "^4.1.0",
 		"@primer/octicons-react": "^11.2.0",
 		"front-matter": "^4.0.2",
 		"js-yaml": "^4.0.0",
