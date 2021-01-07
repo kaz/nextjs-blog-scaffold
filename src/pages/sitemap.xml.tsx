@@ -82,16 +82,18 @@ if (process.env.npm_lifecycle_event == "export") {
 	module.exports.getServerSideProps = getServerSideProps;
 }
 
-const Sitemap = ({ urls }: Props) => (
-	<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-		{urls.map(url => (
-			<url key={url.loc}>
-				<loc>{url.loc}</loc>
-				{url.lastmod && <lastmod>{url.lastmod}</lastmod>}
-				{url.changefreq && <changefreq>{url.changefreq}</changefreq>}
-				{url.priority && <priority>{url.priority}</priority>}
-			</url>
-		))}
-	</urlset>
-);
+const Sitemap = ({ urls }: Props) => {
+	return (
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+			{urls.map(url => (
+				<url key={url.loc}>
+					<loc>{url.loc}</loc>
+					{url.lastmod && <lastmod>{url.lastmod}</lastmod>}
+					{url.changefreq && <changefreq>{url.changefreq}</changefreq>}
+					{url.priority && <priority>{url.priority}</priority>}
+				</url>
+			))}
+		</urlset>
+	);
+};
 export default Sitemap;

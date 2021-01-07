@@ -46,7 +46,7 @@ const Tag = ({ tag, entries }: Props) => {
 				<meta property="og:description" content={description} />
 			</Head>
 			<h2>
-				<TagIcon size={24} /> {tag}
+				<TagIcon size={24} verticalAlign="text-top" /> {tag}
 			</h2>
 			<Entries entries={entries} />
 		</main>
