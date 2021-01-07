@@ -9,9 +9,9 @@ date: 3000-01-03 00:00:00
 - External Link
   - https://nextjs.org/
 - Internal Link (Absolute URL)
-  - http://localhost:3000/post/sanity-check/
+  - http://localhost:3000/posts/sanity-check/
 - Internal Link (Relative URL)
-  - [/post/sanity-check-plugin/](/post/sanity-check-plugin/)
+  - [/posts/sanity-check-plugin/](/posts/sanity-check-plugin/)
 
 ## Dangerous HTML
 
@@ -30,9 +30,9 @@ https://ogp.me/
 
 ## OGP (Local / absolute and related links)
 
-http://localhost:3000/post/sanity-check/
+http://localhost:3000/posts/sanity-check/
 
-[/post/sanity-check-plugin/](/post/sanity-check-plugin/)
+[/posts/sanity-check-plugin/](/posts/sanity-check-plugin/)
 
 ## oEmbed (Twitter)
 
