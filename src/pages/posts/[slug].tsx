@@ -26,7 +26,7 @@ export const config: PageConfig = {
 
 export const getStaticPaths: GetStaticPaths<UrlQuery> = async () => {
 	const articles = await getArticles();
-	const paths = articles.map(({ slug }) => ({ params: { slug: encodeURIComponent(slug) } }));
+	const paths = articles.map(({ slug }) => ({ params: { slug } }));
 	return { paths, fallback: false };
 };
 

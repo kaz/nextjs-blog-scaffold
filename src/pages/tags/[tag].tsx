@@ -19,7 +19,7 @@ export const config: PageConfig = {
 
 export const getStaticPaths: GetStaticPaths<UrlQuery> = async () => {
 	const tags = await getTags();
-	const paths = tags.map(tag => ({ params: { tag: encodeURIComponent(tag) } }));
+	const paths = tags.map(tag => ({ params: { tag } }));
 	return { paths, fallback: false };
 };
 
