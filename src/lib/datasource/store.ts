@@ -8,8 +8,8 @@ interface Storable {
 }
 interface DataSource<T extends Storable> {
 	getSourceDir(): string;
-	getFilter(): (ent: string) => boolean;
-	getId(t: T): string;
+	getSelector(): (fileName: string) => boolean;
+	selectFileByKey?(key: string): string;
 	parse(raw: string, filePath: string): Promise<T>;
 }
 
@@ -22,25 +22,24 @@ export default class<T extends Storable> {
 		this.cache = new Map<string, T>();
 	}
 
-	async read(dirEnt: string) {
-		const filePath = path.join(this.source.getSourceDir(), dirEnt);
+	async read(fileName: string) {
+		const filePath = path.join(this.source.getSourceDir(), fileName);
 		const raw = await fs.readFile(filePath, "utf-8");
 		const data = await this.source.parse(raw, filePath);
-		this.cache.set(this.source.getId(data), data);
+		this.cache.set(fileName, data);
 		return data;
 	}
 	async getAll() {
-		if (this.cache.size) {
+		const fileNames = (await fs.readdir(this.source.getSourceDir())).filter(this.source.getSelector());
+		if (this.cache.size == fileNames.length && !fileNames.some(fileName => !this.cache.has(fileName))) {
 			return Array.from(this.cache.values());
 		}
-		return Promise.all(
-			(await fs.readdir(this.source.getSourceDir())).filter(this.source.getFilter()).map(f => this.read(f)),
-		);
+		return Promise.all(fileNames.map(fileName => this.read(fileName)));
 	}
 	async get(key: string) {
-		if (!this.cache.size) {
-			await this.getAll();
+		if (!this.source.selectFileByKey) {
+			throw new Error("not supported");
 		}
-		return this.cache.get(key);
+		return this.read(this.source.selectFileByKey(key));
 	}
 }

@@ -6,7 +6,6 @@ import { canonicalUrlFromSlug } from "../utils";
 import Store from "./store";
 
 type ArticleAttrs = {
-	slug: string;
 	title: string;
 	image: string | null;
 	tags: string[];
@@ -15,14 +14,17 @@ type ArticleAttrs = {
 };
 export type Article = Omit<ArticleAttrs, "date" | "updated"> & {
 	type: "article";
+	slug: string;
+	body: string;
 	date: string;
 	updated: string;
-	body: string;
 };
 export type CompiledArticle = Article & {
 	description: string;
 	content: string;
 };
+
+const ext = ".md";
 
 const store = new Store<Article>({
 	getSourceDir() {
@@ -31,23 +33,21 @@ const store = new Store<Article>({
 		}
 		return process.env.ARTICLES_DIR;
 	},
-	getFilter() {
-		return ent => ent.endsWith(".md");
+	getSelector() {
+		return fileName => fileName.endsWith(ext);
 	},
-	getId(t) {
-		return t.slug;
+	selectFileByKey(key) {
+		return `${key}${ext}`;
 	},
 	async parse(raw, filePath) {
+		const slug = path.basename(filePath, ext);
 		const { attributes, body } = frontmatter<Partial<ArticleAttrs>>(raw);
 
-		if (!attributes.slug) {
-			attributes.slug = path.basename(filePath, ".md");
-		}
 		if (!attributes.title) {
-			attributes.title = attributes.slug;
+			attributes.title = slug;
 		}
 		if (attributes.image) {
-			attributes.image = new URL(attributes.image, canonicalUrlFromSlug(attributes.slug)).toString();
+			attributes.image = new URL(attributes.image, canonicalUrlFromSlug(slug)).toString();
 		}
 		if (!attributes.date) {
 			attributes.date = new Date();
@@ -59,13 +59,13 @@ const store = new Store<Article>({
 
 		return {
 			type: "article",
-			slug: attributes.slug,
+			slug,
+			body,
 			title: attributes.title,
 			image: attributes.image || null,
 			tags: attributes.tags || [],
 			date: attributes.date.toISOString(),
 			updated: attributes.updated.toISOString(),
-			body,
 		};
 	},
 });

@@ -21,11 +21,8 @@ const store = new Store<External>({
 		}
 		return process.env.EXTERNAL_DIR;
 	},
-	getFilter() {
-		return ent => ent.endsWith(".yml") || ent.endsWith(".yaml");
-	},
-	getId(t) {
-		return t.url;
+	getSelector() {
+		return fileName => fileName.endsWith(".yml") || fileName.endsWith(".yaml");
 	},
 	async parse(raw) {
 		const data = yaml.load(raw);
