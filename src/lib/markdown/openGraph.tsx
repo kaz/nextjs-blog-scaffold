@@ -57,13 +57,16 @@ const LinkCard = ({ meta }: Props) => {
 	const url = new URL(meta.url);
 	return (
 		<div className="linkCard">
-			<a href={meta.local ? url.pathname : meta.url} target={meta.local ? undefined : "_blank"}>
+			<a
+				href={meta.local ? url.pathname : meta.url}
+				target={meta.local ? undefined : "_blank"}
+				style={meta.image ? { backgroundImage: `url(${meta.image})` } : {}}
+			>
 				<div>
-					<big>{meta.title}</big>
-					<small>{url.hostname}</small>
-					<span>{meta.description}</span>
+					<strong>{meta.title}</strong>
+					<cite>{url.hostname}</cite>
+					<q>{meta.description}</q>
 				</div>
-				{meta.image && <img src={meta.image} />}
 			</a>
 		</div>
 	);

@@ -131,36 +131,36 @@ $borderSize: 2px;
 
 		a {
 			display: inline-flex;
-			padding: $baseHeight $baseWidth;
 			border-radius: $gapSize;
+			border: 1px solid gainsboro;
+
+			background-size: contain;
+			background-position: right center;
+			background-repeat: no-repeat;
 
 			color: inherit;
 			&:hover {
 				text-decoration: none;
 			}
 
-			border: 1px solid gainsboro;
-
 			div {
-				big {
+				padding: $baseHeight $baseWidth;
+
+				background: linear-gradient(to right, #ffff 60%, #fff0);
+
+				> * {
 					display: block;
+					width: 60%;
 				}
-				small {
-					display: block;
+				cite {
+					color: lightslategray;
+					font-style: normal;
+					font-size: 0.8em;
+				}
+				q {
 					color: gray;
-					text-transform: uppercase;
-				}
-				span {
-					display: block;
 					padding-top: #{$baseHeight / 2};
 				}
-			}
-
-			$cardImageSize: 8em;
-			img {
-				height: $cardImageSize;
-				max-width: #{$cardImageSize * 2};
-				margin: auto 0 auto $baseWidth;
 			}
 		}
 	}
