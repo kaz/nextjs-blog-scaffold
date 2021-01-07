@@ -41,7 +41,10 @@ const mapFn = async (node: Node) => {
 
 		return { type: "raw", value: embedHTML };
 	} catch (e) {
-		console.log("[WARNING] failed to embed content:", e);
+		if (e instanceof Error) {
+			e = e.message;
+		}
+		console.log("[WARN] failed to embed content:", e);
 	}
 	return node;
 };

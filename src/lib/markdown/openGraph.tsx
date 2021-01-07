@@ -45,7 +45,10 @@ const mapFn = async (node: Node) => {
 			value: ReactDOMServer.renderToStaticMarkup(<LinkCard meta={metadata} />),
 		};
 	} catch (e) {
-		console.log("[WARNING] failed to get metadata:", e);
+		if (e instanceof Error) {
+			e = e.message;
+		}
+		console.log("[WARN] failed to get metadata:", e);
 	}
 	return node;
 };
