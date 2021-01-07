@@ -6,7 +6,8 @@ import publisher from "metascraper-publisher";
 import title from "metascraper-title";
 import url from "metascraper-url";
 import fetch from "node-fetch";
-import { getArticleBySlug } from "./datasource/articles";
+import { getArticle } from "./datasource/articles";
+import { markdownToDescription } from "./markdown";
 import { canonicalUrlFromSlug, isLocalUrl, slugFromUrl } from "./utils";
 
 export type Metadata = {
@@ -44,15 +45,13 @@ const getLocalMetadata = async (url: string): Promise<Metadata> => {
 		throw new Error(`invalid URL was passed: ${url}`);
 	}
 
-	const article = await getArticleBySlug(slug);
-	if (!article) {
-		throw new Error(`no such article: ${slug}`);
-	}
+	const article = await getArticle(slug);
+	const description = await markdownToDescription(article.body);
 
 	return {
 		local: true,
 		date: article.date,
-		description: article.description,
+		description: description,
 		image: article.image || process.env.NEXT_PUBLIC_AUTHOR_IMAGE,
 		title: article.title,
 		url: canonicalUrlFromSlug(article.slug),

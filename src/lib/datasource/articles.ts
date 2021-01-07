@@ -1,7 +1,6 @@
 import frontmatter from "front-matter";
 import path from "path";
 import { getMtimeFromGit } from "../git";
-import { markdownToDescription, markdownToHtml } from "../markdown";
 import { canonicalUrlFromSlug } from "../utils";
 import Store from "./store";
 
@@ -18,10 +17,6 @@ export type Article = Omit<ArticleAttrs, "date" | "updated"> & {
 	body: string;
 	date: string;
 	updated: string;
-};
-export type CompiledArticle = Article & {
-	description: string;
-	content: string;
 };
 
 const ext = ".md";
@@ -71,13 +66,4 @@ const store = new Store<Article>({
 });
 
 export const getArticles = () => store.getAll();
-export const getArticleBySlug = async (slug: string) => {
-	const article = await store.get(slug);
-	if (!article) {
-		return;
-	}
-
-	const [description, content] = await Promise.all([markdownToDescription(article.body), markdownToHtml(article.body)]);
-	const result: CompiledArticle = Object.assign({ description, content }, article);
-	return result;
-};
+export const getArticle = (slug: string) => store.get(slug);

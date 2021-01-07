@@ -6,12 +6,15 @@ import Link from "next/link";
 import React from "react";
 import { TagIcon } from "../../components/Icon";
 import SocialShare from "../../components/SocialShare";
-import { CompiledArticle, getArticleBySlug, getArticles } from "../../lib/datasource/articles";
+import { Article, getArticle, getArticles } from "../../lib/datasource/articles";
+import { markdownToDescription, markdownToHtml } from "../../lib/markdown";
 import { relativeUrlFromTag } from "../../lib/utils";
 import styles from "../../styles/pages/posts.module.scss";
 
 type Props = {
-	article: CompiledArticle;
+	article: Article;
+	description: string;
+	content: string;
 };
 type UrlQuery = {
 	slug: string;
@@ -31,14 +34,13 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 	if (!params) {
 		throw new Error("params is undefined");
 	}
-	const article = await getArticleBySlug(params.slug);
-	if (!article) {
-		throw new Error("article is not found");
-	}
-	return { props: { article } };
+
+	const article = await getArticle(params.slug);
+	const [description, content] = await Promise.all([markdownToDescription(article.body), markdownToHtml(article.body)]);
+	return { props: { article, description, content } };
 };
 
-const Post = ({ article: { title, date, image, tags, description, content } }: Props) => {
+const Post = ({ article: { title, date, image, tags }, description, content }: Props) => {
 	const pageTitle = `${title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
 
 	return (
