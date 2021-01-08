@@ -10,4 +10,7 @@ export const canonicalUrlFromSlug = (slug: string) => canonicalUrlFromPath(relat
 export const relativeUrlFromTag = (tag: string) => `/tags/${tag}/`;
 export const canonicalUrlFromTag = (tag: string) => canonicalUrlFromPath(relativeUrlFromTag(tag));
 
-export const canonicalUrlFromPath = (path: string) => new URL(path, localURL).toString();
+// Due to a bug in next/router, add trailing slash.
+// ref. https://github.com/vercel/next.js/issues/17740
+export const canonicalUrlFromPath = (path: string) =>
+	new URL(path.endsWith("/") ? path : `${path}/`, localURL).toString();
