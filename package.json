@@ -12,7 +12,7 @@
 		"@primer/octicons-react": "^11.2.0",
 		"front-matter": "^4.0.2",
 		"js-yaml": "^4.0.0",
-		"metascraper": "^5.16.7",
+		"metascraper": "^5.16.8",
 		"metascraper-date": "^5.16.7",
 		"metascraper-description": "^5.16.7",
 		"metascraper-image": "^5.16.7",
