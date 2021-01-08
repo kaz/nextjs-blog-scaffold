@@ -134,6 +134,7 @@ $borderSize: 2px;
 		border-radius: $gapSize;
 		background-color: whitesmoke;
 		font-family: Courier, monospace;
+		word-break: break-all;
 	}
 	img {
 		max-width: 100%;
@@ -187,5 +188,8 @@ $borderSize: 2px;
 				}
 			}
 		}
+	}
+	:global(.math-display) {
+		overflow: auto;
 	}
 }
