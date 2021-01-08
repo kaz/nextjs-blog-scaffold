@@ -42,6 +42,7 @@ export const getStaticProps: GetStaticProps<Props, UrlQuery> = async ({ params }
 
 const Post = ({ article: { title, date, image, tags }, description, content }: Props) => {
 	const pageTitle = `${title} | ${process.env.NEXT_PUBLIC_BLOG_TITLE}`;
+	tags = tags.sort((a, b) => a.localeCompare(b));
 
 	return (
 		<main className={styles.post}>
