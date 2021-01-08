@@ -1,6 +1,6 @@
 @use "../mixins" as *;
 
-@import "@fontsource/exo-2/100-italic.css";
+@import "@fontsource/exo-2/300-italic.css";
 
 .header {
 	@include pageContainer;
@@ -8,7 +8,7 @@
 
 	h1 {
 		font-size: 1.4rem;
-		font-weight: 100;
+		font-weight: 300;
 		font-style: italic;
 		font-family: "Exo 2";
 
