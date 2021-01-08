@@ -125,8 +125,7 @@ $borderSize: 2px;
 			border: 1px solid gainsboro;
 		}
 	}
-
-	:global(.linkCard) {
+	aside {
 		margin: $baseHeight 0;
 
 		a {
@@ -163,6 +162,7 @@ $borderSize: 2px;
 				q {
 					color: gray;
 					padding-top: #{$baseHeight / 2};
+					quotes: none;
 				}
 			}
 		}

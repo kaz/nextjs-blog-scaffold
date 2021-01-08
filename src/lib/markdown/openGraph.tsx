@@ -59,7 +59,7 @@ type Props = {
 const LinkCard = ({ meta }: Props) => {
 	const url = new URL(meta.url);
 	return (
-		<div className="linkCard">
+		<aside>
 			<a
 				href={meta.local ? url.pathname : meta.url}
 				target={meta.local ? undefined : "_blank"}
@@ -68,10 +68,10 @@ const LinkCard = ({ meta }: Props) => {
 				<div>
 					<strong>{meta.title}</strong>
 					<cite>{url.hostname}</cite>
-					<q>{meta.description}</q>
+					<q cite={url.toString()}>{meta.description}</q>
 				</div>
 			</a>
-		</div>
+		</aside>
 	);
 };
 
