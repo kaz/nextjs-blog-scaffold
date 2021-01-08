@@ -3,7 +3,6 @@ import "katex/dist/katex.css";
 import type { GetStaticPaths, GetStaticProps, PageConfig } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
 import { TagIcon } from "../../components/Icon";
 import SocialShare from "../../components/SocialShare";
 import { Article, getArticle, getArticles } from "../../lib/datasource/articles";
@@ -64,18 +63,19 @@ const Post = ({ article: { title, date, image, tags }, description, content }: P
 				<small>{date.slice(0, 10)}</small>
 				<h1>{title}</h1>
 				<div>
-					<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
-					<a href="#profile">{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>
+					<div>
+						<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+						<a href="#profile">{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>
+					</div>
 					{tags.length > 0 && (
-						<React.Fragment>
-							<span></span>
+						<div>
 							<TagIcon />
 							{tags.map(tag => (
 								<Link key={tag} href={relativeUrlFromTag(tag)}>
 									{tag}
 								</Link>
 							))}
-						</React.Fragment>
+						</div>
 					)}
 				</div>
 			</section>

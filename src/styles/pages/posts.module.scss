@@ -18,33 +18,54 @@ $borderSize: 2px;
 		margin: 0 0 0.2em 0;
 	}
 	> div {
-		display: flex;
-		align-items: center;
 		color: gray;
+		display: flex;
 
-		> img {
-			width: $metaSize;
-			height: $metaSize;
-			border-radius: #{$metaSize / 2};
+		@include mobile {
+			flex-direction: column;
 		}
-		> a {
-			text-decoration: none;
-			color: inherit;
-			margin-left: #{$gapSize * 2};
 
-			&:hover {
-				text-decoration: underline;
+		> div {
+			display: flex;
+			align-items: center;
+
+			@include mobile {
+				flex-wrap: wrap;
+				&:first-child {
+					margin-bottom: $baseHeight;
+				}
 			}
-		}
-		> span {
-			display: inline-block;
-			margin: 0 #{$gapSize * 4};
 
-			width: $borderSize;
-			height: $metaSize;
+			img {
+				width: $metaSize;
+				height: $metaSize;
+				border-radius: #{$metaSize / 2};
+			}
+			a {
+				text-decoration: none;
+				color: inherit;
+				margin-left: #{$gapSize * 2};
 
-			background-color: gainsboro;
-			transform: skewX(-10deg);
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			&:first-child::after {
+				content: "";
+				display: inline-block;
+
+				@include mobile {
+					display: none;
+				}
+
+				width: $borderSize;
+				height: $metaSize;
+				margin: 0 #{$gapSize * 4};
+
+				background-color: gainsboro;
+				transform: skewX(-10deg);
+			}
 		}
 	}
 }
