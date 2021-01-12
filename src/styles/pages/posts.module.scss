@@ -159,22 +159,21 @@ $borderSize: 2px;
 
 			background-size: contain;
 			background-repeat: no-repeat;
-			background-position: right center;
+			background-position: left center;
 
 			color: inherit;
 			&:hover {
 				text-decoration: none;
 			}
 
-			$msgAreaSize: 70%;
 			div {
 				width: 100%;
 				padding: $baseHeight $baseWidth;
-				background: linear-gradient(to right, #ffff $msgAreaSize, #fff0);
+				background: linear-gradient(to right, #fff0, #ffff 30%);
 
 				> * {
 					display: block;
-					width: $msgAreaSize;
+					margin-left: 25%;
 				}
 				cite {
 					color: lightslategray;
@@ -183,8 +182,8 @@ $borderSize: 2px;
 				}
 				q {
 					color: gray;
-					padding-top: #{$baseHeight / 2};
 					quotes: none;
+					margin-top: #{$baseHeight / 2};
 				}
 			}
 		}
