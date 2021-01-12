@@ -61,8 +61,9 @@ const LinkCard = ({ meta }: Props) => {
 	return (
 		<aside>
 			<a
-				href={meta.local ? url.pathname : meta.url}
+				rel={meta.local ? undefined : "noopener noreferrer"}
 				target={meta.local ? undefined : "_blank"}
+				href={meta.local ? url.pathname : meta.url}
 				style={meta.image ? { backgroundImage: `url(${meta.image})` } : {}}
 			>
 				<div>

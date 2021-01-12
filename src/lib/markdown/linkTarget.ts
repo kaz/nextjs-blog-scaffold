@@ -25,7 +25,9 @@ const mapFn = async (node: Node) => {
 		return node;
 	}
 
-	node.properties["target"] = "_blank";
+	node.properties.rel = "noopener noreferrer";
+	node.properties.target = "_blank";
+
 	return node;
 };
 

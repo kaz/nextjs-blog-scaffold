@@ -14,7 +14,7 @@ const ArticleItem = ({ item }: { item: Article }) => (
 const ExternalItem = ({ item }: { item: External }) => (
 	<li>
 		<div>{item.date.slice(0, 10)}</div>
-		<a target="_blank" href={item.url}>
+		<a rel="noopener noreferrer" target="_blank" href={item.url}>
 			{item.title}
 			<small>Published in {item.publisher}</small>
 		</a>

@@ -14,16 +14,16 @@ const SocialShare = ({ pageTitle }: Props) => {
 
 	return (
 		<div className={styles.social}>
-			<a target="_blank" href={`https://social-plugins.line.me/lineit/share?url=${url}`}>
+			<a rel="noopener noreferrer" target="_blank" href={`https://social-plugins.line.me/lineit/share?url=${url}`}>
 				<LineIcon inverted={true} />
 			</a>
-			<a target="_blank" href={`http://twitter.com/share?url=${url}&text=${text}`}>
+			<a rel="noopener noreferrer" target="_blank" href={`http://twitter.com/share?url=${url}&text=${text}`}>
 				<TwitterIcon inverted={true} />
 			</a>
-			<a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}>
+			<a rel="noopener noreferrer" target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}>
 				<FacebookIcon inverted={true} />
 			</a>
-			<a target="_blank" href={`http://b.hatena.ne.jp/add?url=${url}`}>
+			<a rel="noopener noreferrer" target="_blank" href={`http://b.hatena.ne.jp/add?url=${url}`}>
 				<HatenabookmarkIcon inverted={true} />
 			</a>
 		</div>
