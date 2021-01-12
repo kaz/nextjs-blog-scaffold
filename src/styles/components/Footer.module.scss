@@ -1,7 +1,7 @@
 @use "../mixins" as *;
 
 $profilePhotoSize: 64px;
-$snsLinkIconSize: 16px;
+$snsLinkIconSize: 18px;
 
 .footer {
 	@include pageContainer;
@@ -22,9 +22,10 @@ $snsLinkIconSize: 16px;
 			small {
 				color: gray;
 			}
-			h3 {
+			strong {
+				display: block;
 				font-weight: normal;
-				margin: 0;
+				font-size: 1.3rem;
 
 				a {
 					display: inline-block;

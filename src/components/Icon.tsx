@@ -6,15 +6,18 @@ type Props = {
 };
 
 const icon = (name: string) => (props: Props) => {
-	const { svg, hex } = simpleIcons.get(name);
+	const { hex, path, title } = simpleIcons.get(name);
 	return (
 		<span
+			title={title}
 			style={{
-				fill: props.inverted ? "white" : `#${hex}`,
 				backgroundColor: props.inverted ? `#${hex}` : "initial",
 			}}
-			dangerouslySetInnerHTML={{ __html: svg }}
-		/>
+		>
+			<svg viewBox="0 0 24 24">
+				<path fill={props.inverted ? "white" : `#${hex}`} d={path} />
+			</svg>
+		</span>
 	);
 };
 

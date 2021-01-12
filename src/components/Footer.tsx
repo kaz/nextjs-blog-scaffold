@@ -5,10 +5,10 @@ const Footer = () => {
 	return (
 		<footer className={styles.footer}>
 			<div id="profile" className={styles.profile}>
-				<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+				<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} alt={process.env.NEXT_PUBLIC_AUTHOR_NAME} />
 				<div>
 					<small>Author</small>
-					<h3>
+					<strong>
 						{process.env.NEXT_PUBLIC_AUTHOR_NAME}
 						{process.env.NEXT_PUBLIC_AUTHOR_GITHUB_URL && (
 							<a target="_blank" href={process.env.NEXT_PUBLIC_AUTHOR_GITHUB_URL}>
@@ -25,7 +25,7 @@ const Footer = () => {
 								<FacebookIcon />
 							</a>
 						)}
-					</h3>
+					</strong>
 					<p>{process.env.NEXT_PUBLIC_AUTHOR_BIO}</p>
 				</div>
 			</div>

@@ -64,7 +64,7 @@ const Post = ({ article: { title, date, image, tags }, description, content }: P
 				<h1>{title}</h1>
 				<div>
 					<div>
-						<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} />
+						<img src={process.env.NEXT_PUBLIC_AUTHOR_IMAGE} alt={process.env.NEXT_PUBLIC_AUTHOR_NAME} />
 						<a href="#profile">{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>
 					</div>
 					{tags.length > 0 && (
