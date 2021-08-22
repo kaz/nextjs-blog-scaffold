@@ -12,22 +12,27 @@
 			flex-direction: column;
 		}
 
+		@mixin block {
+			padding: 0.5em 1em;
+			line-height: 1.4em;
+		}
 		> div {
-			color: gray;
+			@include block;
 
+			color: dimgray;
 			flex: 0 0 auto;
-			margin: 0.5em 1em;
+
 			@include mobile {
-				margin: 1em 0 0 1em;
+				padding: 1em 0 0 1em;
 			}
 		}
 		> a {
+			@include block;
+
 			color: royalblue;
 			font-weight: bold;
 			text-decoration: none;
-
 			flex: 1 1 auto;
-			padding: 0.5em 1em;
 
 			&:hover {
 				background-color: ghostwhite;
@@ -35,7 +40,7 @@
 
 			small {
 				display: block;
-				color: gray;
+				color: dimgray;
 				font-weight: normal;
 				text-transform: uppercase;
 				font-size: 0.7rem;

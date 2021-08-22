@@ -2,16 +2,16 @@ $boxSize: 32px;
 
 .social {
 	text-align: right;
-	margin: 1em 0;
+	margin: 2em 0;
 
 	a {
-		margin-left: #{$boxSize / 16};
+		margin-left: #{$boxSize * 0.0625};
 
 		span {
 			display: inline-block;
 			height: $boxSize;
 			width: $boxSize;
-			padding: #{$boxSize / 4};
+			padding: #{$boxSize * 0.25};
 		}
 	}
 }
