@@ -1,16 +1,18 @@
-import type { Text } from "hast";
+import type { Root, Text } from "hast";
 import type { Plugin, Transformer } from "unified";
-import visit from "unist-util-visit";
 
-const plugin: Plugin = () => transformer;
+const plugin: Plugin<any, Root> = () => transformer;
 
-const transformer: Transformer = tree => {
-	const texts: string[] = [];
-	visit<Text>(tree, "text", node => {
-		texts.push(node.value);
+const transformer: Transformer<Root> = async tree => {
+	const { visit } = await import("unist-util-visit");
+
+	const textNodes: Text[] = [];
+	visit(tree, "text", node => {
+		textNodes.push(node);
 	});
-	const output: Text = { type: "text", value: texts.join("").replace(/\s+/g, " ") };
-	return output;
+
+	tree.children = textNodes;
+	return tree;
 };
 
 module.exports = plugin;

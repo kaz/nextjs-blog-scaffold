@@ -1,12 +1,12 @@
+import type { Root } from "hast";
 import type { Plugin, Transformer } from "unified";
-import type { Node } from "unist";
 import { getEmbedHTML } from "../embed";
-import { isElement, map } from "./helper";
+import { isElement, MapCallback, mapTree } from "./helper";
 
-const plugin: Plugin = () => transformer;
-const transformer: Transformer = tree => map(tree, mapFn);
+const plugin: Plugin<any, Root> = () => transformer;
+const transformer: Transformer<Root> = tree => mapTree(tree, callback);
 
-const mapFn = async (node: Node) => {
+const callback: MapCallback = async node => {
 	if (!isElement(node)) {
 		return node;
 	}

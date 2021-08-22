@@ -25,13 +25,8 @@ const store = new Store<External>({
 		return fileName => fileName.endsWith(".yml") || fileName.endsWith(".yaml");
 	},
 	async parse(raw) {
-		const data = yaml.load(raw);
-		if (!data || typeof data != "object") {
-			throw new Error("parse failed: unexpected format");
-		}
-
-		const attrs: Partial<ExternalAttrs> = data;
-		if (!attrs.url) {
+		const attrs = yaml.load(raw) as Partial<ExternalAttrs>;
+		if (!attrs || !attrs.url) {
 			throw new Error("parse failed: `url` did not exist");
 		}
 

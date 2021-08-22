@@ -1,14 +1,16 @@
-import type { FootnoteReference } from "mdast";
+import type { Root } from "mdast";
 import type { Plugin, Transformer } from "unified";
-import visit from "unist-util-visit";
 
-const plugin: Plugin = () => transformer;
+const plugin: Plugin<any, Root> = () => transformer;
 
-const transformer: Transformer = tree => {
+const transformer: Transformer<Root> = async tree => {
+	const { visit } = await import("unist-util-visit");
+
 	let index = 0;
-	visit<FootnoteReference>(tree, "footnoteReference", node => {
+	visit(tree, "footnoteReference", node => {
 		node.label = (++index).toString();
 	});
+	return tree;
 };
 
 module.exports = plugin;

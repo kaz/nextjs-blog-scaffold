@@ -4,10 +4,10 @@ module.exports = {
 
 	webpack: (config, { isServer }) => {
 		if (!isServer) {
-			config.node = {
-				fs: "empty",
-				child_process: "empty",
-			};
+			config.resolve.fallback.fs = false;
+			config.resolve.fallback.net = false;
+			config.resolve.fallback.tls = false;
+			config.resolve.fallback.child_process = false;
 		}
 		return config;
 	},
