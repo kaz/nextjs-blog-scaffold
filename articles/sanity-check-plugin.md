@@ -41,12 +41,13 @@ $$
 
 ## Footnotes reference (remark-footnotes)
 
-This[^1] is footnote[^footnote].
+This[^footnote] is footnote[^1].
+A footnote referenced multiple[^footnote] times should have same number!
 
 ## Footnotes definition (remark-footnotes)
-
-[^footnote]: Hi there!
 
 [^1]: numbered footnote
 
     with multi paragraph
+
+[^footnote]: Hi there!
