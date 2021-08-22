@@ -10,7 +10,6 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import linkTarget from "./linkTarget";
-import numberedFootnote from "./numberedFootnote";
 import oEmbed from "./oEmbed";
 import openGraph from "./openGraph";
 import plaintext from "./plaintext";
@@ -21,7 +20,6 @@ const getMarkdownProcessor = () =>
 		.use(remarkGfm)
 		.use(remarkMath)
 		.use(remarkFootnotes)
-		.use(numberedFootnote)
 		.use(remarkRehype, { allowDangerousHtml: true });
 
 const descriptionLength = 100;
