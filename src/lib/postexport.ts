@@ -19,7 +19,7 @@ const htmlize = async (dirName: string) => {
 	const dest = path.join(ourDir, `${dirName}.html`);
 
 	await fs.copyFile(src, dest);
-	return fs.rmdir(dirPath, { recursive: true });
+	return fs.rm(dirPath, { recursive: true });
 };
 
 const jobs = [htmlize("404"), getSitemapContent().then(write("sitemap.xml"))];

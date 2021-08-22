@@ -1,7 +1,6 @@
 import type { GetServerSideProps, GetStaticProps } from "next";
 import type { ReactNode } from "react";
 import ReactDOMServer from "react-dom/server";
-import { getLatestTimestamp, getTags } from "../lib/datasource";
 import { getArticles } from "../lib/datasource/articles";
 import { canonicalUrlFromPath, canonicalUrlFromSlug, canonicalUrlFromTag } from "../lib/utils";
 
@@ -28,12 +27,15 @@ type SiteUrl = {
 	priority?: number;
 };
 
-const getIndexSitemapEntries = async (): Promise<SiteUrl[]> => [
-	{
-		loc: canonicalUrlFromPath("/"),
-		lastmod: (await getLatestTimestamp()).toISOString(),
-	},
-];
+const getIndexSitemapEntries = async (): Promise<SiteUrl[]> => {
+	const { getLatestTimestamp } = await import("../lib/datasource");
+	return [
+		{
+			loc: canonicalUrlFromPath("/"),
+			lastmod: (await getLatestTimestamp()).toISOString(),
+		},
+	];
+};
 const getPostSitemapEntries = async (): Promise<SiteUrl[]> => {
 	const articles = await getArticles();
 	return articles.map(article => {
@@ -44,6 +46,7 @@ const getPostSitemapEntries = async (): Promise<SiteUrl[]> => {
 	});
 };
 const getTagSitemapEntries = async (): Promise<SiteUrl[]> => {
+	const { getLatestTimestamp, getTags } = await import("../lib/datasource");
 	const tags = await getTags();
 	return Promise.all(
 		tags.map(async tag => {
