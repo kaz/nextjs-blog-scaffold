@@ -2,56 +2,7 @@ import type { Root } from "hast";
 import ReactDOMServer from "react-dom/server";
 import type { Plugin, Transformer } from "unified";
 import { getMetadata, Metadata } from "../meta";
-import { isElement, MapCallback, mapTree } from "./helper";
-
-const plugin: Plugin<any, Root> = () => transformer;
-const transformer: Transformer<Root> = tree => mapTree(tree, callback);
-
-const callback: MapCallback = async node => {
-	if (!isElement(node)) {
-		return node;
-	}
-	if (node.tagName != "p") {
-		return node;
-	}
-	if (node.children.length != 1) {
-		return node;
-	}
-
-	const child = node.children[0];
-	if (!isElement(child)) {
-		return node;
-	}
-	if (child.tagName != "a") {
-		return node;
-	}
-	if (!child.properties) {
-		return node;
-	}
-
-	const href = child.properties["href"];
-	if (typeof href != "string") {
-		return node;
-	}
-
-	try {
-		const metadata = await getMetadata(href);
-		if (!metadata.title) {
-			return node;
-		}
-
-		return {
-			type: "raw",
-			value: ReactDOMServer.renderToStaticMarkup(<LinkCard meta={metadata} />),
-		};
-	} catch (e) {
-		if (e instanceof Error) {
-			e = e.message;
-		}
-		console.log("[WARN] failed to get metadata:", e);
-	}
-	return node;
-};
+import { getLinkTransformer } from "./helper";
 
 type Props = {
 	meta: Metadata;
@@ -76,5 +27,13 @@ const LinkCard = ({ meta }: Props) => {
 	);
 };
 
-module.exports = plugin;
+const transformer: Transformer<Root> = getLinkTransformer(async href => {
+	const metadata = await getMetadata(href);
+	if (!metadata.title) {
+		return;
+	}
+	return ReactDOMServer.renderToStaticMarkup(<LinkCard meta={metadata} />);
+});
+
+const plugin: Plugin<any, Root> = () => transformer;
 export default plugin;

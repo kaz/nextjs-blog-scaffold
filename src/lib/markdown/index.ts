@@ -24,7 +24,9 @@ const getMarkdownProcessor = () =>
 
 const descriptionLength = 100;
 export const markdownToDescription = async (md: string) => {
-	const plain = (await getMarkdownProcessor().use(plaintext).use(rehypeStringify).process(md)).toString();
+	const plain = (await getMarkdownProcessor().use(plaintext).use(rehypeStringify).process(md))
+		.toString()
+		.replace(/\n+/g, " ");
 	if (plain.length <= descriptionLength) {
 		return plain;
 	}

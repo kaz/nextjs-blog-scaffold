@@ -1,35 +1,30 @@
-import type { Root } from "hast";
+import type { Element, Root } from "hast";
 import type { Plugin, Transformer } from "unified";
 import { isLocalUrl } from "../utils";
-import { isElement, MapCallback, mapTree } from "./helper";
 
-const plugin: Plugin<any, Root> = () => transformer;
-const transformer: Transformer<Root> = tree => mapTree(tree, callback);
+const transformer: Transformer<Root> = async tree => {
+	const { selectAll } = await import("unist-util-select");
 
-const callback: MapCallback = async node => {
-	if (!isElement(node)) {
-		return node;
-	}
-	if (node.tagName != "a") {
-		return node;
-	}
-	if (!node.properties) {
-		return node;
-	}
+	const nodes = selectAll("element[tagName=a]", tree) as Element[];
+	nodes.forEach(node => {
+		if (!node.properties) {
+			return;
+		}
 
-	const href = node.properties["href"];
-	if (typeof href != "string") {
-		return node;
-	}
-	if (isLocalUrl(href)) {
-		return node;
-	}
+		const href = node.properties["href"];
+		if (typeof href != "string") {
+			return;
+		}
+		if (isLocalUrl(href)) {
+			return;
+		}
 
-	node.properties.rel = "noopener noreferrer";
-	node.properties.target = "_blank";
+		node.properties.rel = "noopener noreferrer";
+		node.properties.target = "_blank";
+	});
 
-	return node;
+	return tree;
 };
 
-module.exports = plugin;
+const plugin: Plugin<any, Root> = () => transformer;
 export default plugin;

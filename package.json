@@ -35,7 +35,7 @@
 		"remark-rehype": "^9.0.0",
 		"simple-git": "^2.44.0",
 		"simple-icons": "^5.11.0",
-		"unist-util-visit": "^4.0.0"
+		"unist-util-select": "^4.0.0"
 	},
 	"devDependencies": {
 		"@types/hast": "^2.3.4",
